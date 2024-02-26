@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="{%static 'authentication/css/style.css'%}">
 
 </head>
 <body>
@@ -29,13 +30,9 @@
       </div>
 
       <div class="profile">
-         <img src="images/pic-1.jpg" class="image" alt="">
-         <h3 class="name">Parmesh</h3>
-         <p class="role">studen</p>
-         <a href="profile.html" class="btn">view profile</a>
          <div class="flex-btn">
-            <a href="login.html" class="option-btn">login</a>
-            <a href="register.html" class="option-btn">register</a>
+            <a href="/login" class="option-btn">login</a>
+            <a href="/register" class="option-btn">register</a>
          </div>
       </div>
 
@@ -49,13 +46,6 @@
       <i class="fas fa-times"></i>
    </div>
 
-   <div class="profile">
-      <img src="images/pic-1.jpg" class="image" alt="">
-      <h3 class="name">Parmesh</h3>
-      <p class="role">Student</p>
-      <a href="profile.html" class="btn">view profile</a>
-   </div>
-
    <nav class="navbar">
       <a href="home.html"><i class="fas fa-home"></i><span>home</span></a>
       <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
@@ -66,18 +56,19 @@
 
 <section class="form-container">
 
-   <form action="" method="post" enctype="multipart/form-data">
+   <form action="/register" method="POST">
+      {% csrf_token %}
       <h3>register now</h3>
       <p>your name <span>*</span></p>
       <input type="text" name="name" placeholder="enter your name" required maxlength="50" class="box">
+      <p>username <span>*</span></p>
+      <input type="text" name="username" placeholder="enter a username" required maxlength="50" class="box">
       <p>your email <span>*</span></p>
       <input type="email" name="email" placeholder="enter your email" required maxlength="50" class="box">
       <p>your password <span>*</span></p>
       <input type="password" name="pass" placeholder="enter your password" required maxlength="20" class="box">
       <p>confirm password <span>*</span></p>
       <input type="password" name="c_pass" placeholder="confirm your password" required maxlength="20" class="box">
-      <p>select profile <span>*</span></p>
-      <input type="file" accept="image/*" required class="box">
       <input type="submit" value="register new" name="submit" class="btn">
    </form>
 
@@ -90,7 +81,7 @@
 </footer>
 
 <!-- custom js file link  -->
-<script src="js/script.js"></script>
+<script src="{%static 'authentication/js/script.js'%}"></script>
 
    
 </body>

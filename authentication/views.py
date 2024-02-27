@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -11,23 +12,19 @@ def home(request):
 
 def register(request):
     if request.method == 'POST':
-        print("This works!")
         name = request.POST['name']
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['pass']
         password2 = request.POST['c_pass']
-
-                # Check if passwords match
         if password == password2:
-                    # Check email
                 if User.objects.filter(email=email).exists():
                         print('Email is already taken')
                 else:
                         myuser = User.objects.create_user(username,email,password)
                         myuser.name = name
                         myuser.save()
-                        print('User created')
+                        messages.success(request, 'Your account has been created successfully')
                         return redirect('/login')
         else:
             print('Passwords do not match')
@@ -35,7 +32,26 @@ def register(request):
     return render(request, 'authentication/register.html')
 
 def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['pass']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            request.session['username'] = user.username 
+            return render(request, 'home.html')
+        else:
+            messages.error(request, 'Invalid credentials, please try again')
+            return redirect('/login')
     return render(request, 'authentication/login.html')
 
 def logout(request):
-    pass
+    auth_logout(request)
+    messages.success(request, 'You have been logged out')
+    return redirect('/login') 
+
+def courses(request):
+    return render(request, 'courses/courses.html')
+
+def ranking(request):
+    return render(request, 'assessment/ranking.html')

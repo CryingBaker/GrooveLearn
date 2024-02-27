@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>courses</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+    <link rel="stylesheet" href="{%static 'authentication/css/style.css'%}">
+</head>
+
+<body>
+
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissable fade show" role="alert">
+    <strong>Message:</strong>{{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div> 
+    {% endfor %}
+
+    <header class="header">
+
+        <section class="flex">
+
+            <a href="home.html" class="logo">GrooveLearn.</a>
+            =
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+            </div>
+
+            <div class="profile">
+                <div class="flex-btn">
+                    {% if user.is_authenticated %}
+                    <a href="/logout" class="option-btn">logout</a>
+                    {% else %}
+                        <a href="/login" class="option-btn">login</a>
+                        <a href="/register" class="option-btn">register</a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </section>
+
+    </header>
+
+    <div class="side-bar">
+
+        <div id="close-btn">
+            <i class="fas fa-times"></i>
+        </div>
+
+        {% if user.is_authenticated %}
+            <div class="profile">
+                <h3 class="name">Welcome, {{ user.username }}</h3>
+                <a href="/profile" class="btn">view profile</a>
+        </div>
+        {% endif %}
+
+        <nav class="navbar">
+            <a href="/home"><i class="fas fa-home"></i><span>home</span></a>
+            <a href="/courses"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
+            <a href="/ranking"><i class="fas fa-chalkboard-user"></i><span>Ranking</span></a>
+        </nav>
+
+    </div>
+
+    {% if user.is_authenticated %}
+    <section class="teachers">
+
+        <h1 class="heading">Rankers List</h1>
+
+        <form action="" method="post" class="search-tutor">
+            <input type="text" name="search_box" placeholder="search student..." required maxlength="100">
+            <button type="submit" class="fas fa-search" name="search_tutor"></button>
+        </form>
+
+        <div class="box-container">
+
+            <div class="box offer">
+                <h3>become a Top Ranker</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, itaque ipsam fuga ex et aliquam.
+                </p>
+                <a href="register.html" class="inline-btn">get started</a>
+            </div>
+
+            <div class="box">
+                <div class="tutor">
+                    <img src="images/pic-2.jpg" alt="">
+                    <div>
+                        <h3>Student 1</h3>
+                        <span>developer</span>
+                    </div>
+                </div>
+                <p>Rank : <span>1</span></p>
+                <p>total solved : <span>18</span></p>
+                <p>total points : <span>1208</span></p>
+                <a href="teacher_profile.html" class="inline-btn">view profile</a>
+            </div>
+
+            <div class="box">
+                <div class="tutor">
+                    <img src="images/pic-3.jpg" alt="">
+                    <div>
+                        <h3>Student 2</h3>
+                        <span>developer</span>
+                    </div>
+                </div>
+                <p>Rank : <span>2</span></p>
+                <p>total solved : <span>18</span></p>
+                <p>total points : <span>1001</span></p>
+                <a href="teacher_profile.html" class="inline-btn">view profile</a>
+            </div>
+
+
+
+            <div class="box">
+                <div class="tutor">
+                    <img src="images/pic-5.jpg" alt="">
+                    <div>
+                        <h3>Student 3</h3>
+                        <span>developer</span>
+                    </div>
+                </div>
+                <p>Rank : <span>3</span></p>
+                <p>total solved : <span>18</span></p>
+                <p>total points : <span>900</span></p>
+                <a href="teacher_profile.html" class="inline-btn">view profile</a>
+            </div>
+
+            <div class="box">
+                <div class="tutor">
+                    <img src="images/pic-6.jpg" alt="">
+                    <div>
+                        <h3>Student 4</h3>
+                        <span>developer</span>
+                    </div>
+                </div>
+                <p>Rank : <span>4</span></p>
+                <p>total solved : <span>18</span></p>
+                <p>total points : <span>800</span></p>
+                <a href="teacher_profile.html" class="inline-btn">view profile</a>
+            </div>
+
+            <div class="box">
+                <div class="tutor">
+                    <img src="images/pic-7.jpg" alt="">
+                    <div>
+                        <h3>Student 5</h3>
+                        <span>developer</span>
+                    </div>
+                </div>
+                <p>Rank : <span>5</span></p>
+                <p>total solved : <span>18</span></p>
+                <p>total points : <span>700</span></p>
+                <a href="teacher_profile.html" class="inline-btn">view profile</a>
+            </div>
+
+            <div class="box">
+                <div class="tutor">
+                    <img src="images/pic-8.jpg" alt="">
+                    <div>
+                        <h3>Student 6</h3>
+                        <span>developer</span>
+                    </div>
+                </div>
+                <p>Rank : <span>6</span></p>
+                <p>total solved : <span>18</span></p>
+                <p>total points : <span>600</span></p>
+                <a href="teacher_profile.html" class="inline-btn">view profile</a>
+            </div>
+
+        </div>
+
+    </section>
+    {% else %}
+    <section class="courses">
+
+        <h1 class="heading">Login to view this content</h1>
+        </div>
+    </section>
+    {% endif %}
+    <footer class="footer">
+
+        &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!
+
+    </footer>
+
+    <script src="{%static 'authentication/js/script.js'%}"></script>
+
+
+</body>
+
+</html>

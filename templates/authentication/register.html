@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,75 +15,85 @@
    <link rel="stylesheet" href="{%static 'authentication/css/style.css'%}">
 
 </head>
+
 <body>
 
-<header class="header">
-   
-   <section class="flex">
+   {% for message in messages %}
+   <div class="alert alert-{{message.tags}} alert-dismissable fade show" role="alert">
+      <strong>Message:</strong>{{message}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   {% endfor %}
+   <header class="header">
 
-      <a href="home.html" class="logo">GrooveLearn.</a>
+      <section class="flex">
 
-      <div class="icons">
-         <div id="menu-btn" class="fas fa-bars"></div>
-         <div id="search-btn" class="fas fa-search"></div>
-         <div id="user-btn" class="fas fa-user"></div>
-         <div id="toggle-btn" class="fas fa-sun"></div>
-      </div>
+         <a href="/home" class="logo">GrooveLearn.</a>
 
-      <div class="profile">
-         <div class="flex-btn">
-            <a href="/login" class="option-btn">login</a>
-            <a href="/register" class="option-btn">register</a>
+         <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+            <div id="toggle-btn" class="fas fa-sun"></div>
          </div>
+
+         <div class="profile">
+            <div class="flex-btn">
+               <a href="/login" class="option-btn">login</a>
+               <a href="/register" class="option-btn">register</a>
+            </div>
+         </div>
+
+      </section>
+
+   </header>
+
+   <div class="side-bar">
+
+      <div id="close-btn">
+         <i class="fas fa-times"></i>
       </div>
+
+      <nav class="navbar">
+         <a href="/home"><i class="fas fa-home"></i><span>home</span></a>
+         <a href="/courses"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
+         <a href="/ranking"><i class="fas fa-chalkboard-user"></i><span>Ranking</span></a>
+      </nav>
+
+   </div>
+
+   <section class="form-container">
+
+      <form action="/register" method="POST">
+         {% csrf_token %}
+         <h3>register now</h3>
+         <p>your name <span>*</span></p>
+         <input type="text" name="name" placeholder="enter your name" required maxlength="50" class="box">
+         <p>username <span>*</span></p>
+         <input type="text" name="username" placeholder="enter a username" required maxlength="50" class="box">
+         <p>your email <span>*</span></p>
+         <input type="email" name="email" placeholder="enter your email" required maxlength="50" class="box">
+         <p>your password <span>*</span></p>
+         <input type="password" name="pass" placeholder="enter your password" required maxlength="20" class="box">
+         <p>confirm password <span>*</span></p>
+         <input type="password" name="c_pass" placeholder="confirm your password" required maxlength="20" class="box">
+         <input type="submit" value="register new" name="submit" class="btn">
+      </form>
 
    </section>
 
-</header>   
+   <footer class="footer">
 
-<div class="side-bar">
+      &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!
 
-   <div id="close-btn">
-      <i class="fas fa-times"></i>
-   </div>
+   </footer>
 
-   <nav class="navbar">
-      <a href="home.html"><i class="fas fa-home"></i><span>home</span></a>
-      <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
-      <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Ranking</span></a>
-   </nav>
+   <!-- custom js file link  -->
+   <script src="{%static 'authentication/js/script.js'%}"></script>
 
-</div>
 
-<section class="form-container">
-
-   <form action="/register" method="POST">
-      {% csrf_token %}
-      <h3>register now</h3>
-      <p>your name <span>*</span></p>
-      <input type="text" name="name" placeholder="enter your name" required maxlength="50" class="box">
-      <p>username <span>*</span></p>
-      <input type="text" name="username" placeholder="enter a username" required maxlength="50" class="box">
-      <p>your email <span>*</span></p>
-      <input type="email" name="email" placeholder="enter your email" required maxlength="50" class="box">
-      <p>your password <span>*</span></p>
-      <input type="password" name="pass" placeholder="enter your password" required maxlength="20" class="box">
-      <p>confirm password <span>*</span></p>
-      <input type="password" name="c_pass" placeholder="confirm your password" required maxlength="20" class="box">
-      <input type="submit" value="register new" name="submit" class="btn">
-   </form>
-
-</section>
-
-<footer class="footer">
-
-   &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!
-
-</footer>
-
-<!-- custom js file link  -->
-<script src="{%static 'authentication/js/script.js'%}"></script>
-
-   
 </body>
+
 </html>

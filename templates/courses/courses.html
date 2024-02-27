@@ -1,17 +1,15 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
+    <title>courses</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
     <link rel="stylesheet" href="{%static 'authentication/css/style.css'%}">
-
 </head>
 
 <body>
@@ -29,8 +27,8 @@
 
         <section class="flex">
 
-            <a href="/home" class="logo">GrooveLearn.</a>
-
+            <a href="home.html" class="logo">GrooveLearn.</a>
+            =
             <div class="icons">
                 <div id="menu-btn" class="fas fa-bars"></div>
                 <div id="search-btn" class="fas fa-search"></div>
@@ -74,21 +72,19 @@
 
     </div>
 
-    <section class="home-grid">
+    {% if user.is_authenticated %}
+    <section class="courses">
 
-        <h1 class="heading">quick options</h1>
-
-        <div class="box-container">
-            <div class="box">
-                <h3 class="title">become a Ranker</h3>
-                <p class="tutor">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis, nam?</p>
-                <a href="/ranking" class="inline-btn">get started</a>
-            </div>
-
+        <h1 class="heading">our courses</h1>
         </div>
-
     </section>
+    {% else %}
+    <section class="courses">
 
+        <h1 class="heading">Login to view this content</h1>
+        </div>
+    </section>
+    {% endif %}
     <footer class="footer">
 
         &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!

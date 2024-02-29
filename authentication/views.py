@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'authentication/home.html')
 
 def register(request):
     if request.method == 'POST':
@@ -39,7 +39,7 @@ def login(request):
         if user is not None:
             auth_login(request, user)
             request.session['username'] = user.username 
-            return render(request, 'home.html')
+            return render(request, 'authentication/home.html')
         else:
             messages.error(request, 'Invalid credentials, please try again')
             return redirect('/login')
@@ -50,8 +50,5 @@ def logout(request):
     messages.success(request, 'You have been logged out')
     return redirect('/login') 
 
-def courses(request):
-    return render(request, 'courses/courses.html')
-
-def ranking(request):
-    return render(request, 'assessment/ranking.html')
+def profile(request):
+    return render(request, 'authentication/profile.html')

@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib import messages
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.hashers import check_password
 
 # Create your views here.
 def home(request):
@@ -52,3 +54,29 @@ def logout(request):
 
 def profile(request):
     return render(request, 'authentication/profile.html')
+
+def updateprofile(request):
+    if request.method == 'POST':
+        newusername = request.POST['username']
+        newemail = request.POST['email']
+        oldpassword = request.POST['old_pass']
+        newpassword = request.POST.get('pass')
+        newpassword2 = request.POST['c_pass']
+        if newusername:
+            request.user.username = newusername
+        if newemail:
+            if User.objects.filter(email=newemail).exists():
+                messages.error(request, 'Email is already taken')
+            else:
+                request.user.email = newemail
+
+        if check_password(oldpassword, request.user.password) and newpassword is not None and newpassword2 is not None:
+            if newpassword == newpassword2:
+                request.user.set_password(newpassword)
+            else:
+                messages.error(request, 'Passwords do not match')
+        request.user.save()
+        update_session_auth_hash(request, request.user)
+        messages.success(request, 'Profile updated successfully')
+        return redirect('profile')
+    return render(request, 'authentication/updateprofile.html')

@@ -1,4 +1,4 @@
 from django.shortcuts import render
 
-def ranking(request):
-    return render(request, 'assessment/ranking.html')
+def leaderboard(request):
+    return render(request, 'assessment/leaderboard.html')

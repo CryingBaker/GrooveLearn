@@ -1,51 +1,59 @@
 {% load static %}
-<!DOCTYPE html <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>courses</title>
-
+    <title>home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chilanka&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="{%static 'general/css/style.css'%}">
 
-    <link rel="stylesheet" href="{%static 'authentication/css/style.css'%}">
 </head>
 
 <body>
-
     {% for message in messages %}
     <div class="alert alert-{{message.tags}} alert-dismissable fade show" role="alert">
-    <strong>Message:</strong>{{message}}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    <span aria-hidden="true">&times;</span>
-    </button>
-    </div> 
+        <strong>Message:</strong>{{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     {% endfor %}
 
     <header class="header">
 
         <section class="flex">
 
-            <a href="home.html" class="logo">GrooveLearn.</a>
-            =
+            <a href="/home" class="logo">GrooveLearn</a>
+
             <div class="icons">
                 <div id="menu-btn" class="fas fa-bars"></div>
                 <div id="search-btn" class="fas fa-search"></div>
                 <div id="user-btn" class="fas fa-user"></div>
                 <div id="toggle-btn" class="fas fa-sun"></div>
             </div>
-
             <div class="profile">
+                {% if user.is_authenticated %}
+                <img src="{% static 'general/images/pic-1.jpg' %}" class="image" alt="">
+                <h3 class="name">{{ user.username }}</h3>
+                <!-- <p class="role">{{user.role}}</p> -->
                 <div class="flex-btn">
-                    {% if user.is_authenticated %}
+                    <a href="/profile" class="btn">view profile</a>
                     <a href="/logout" class="option-btn">logout</a>
-                    {% else %}
-                        <a href="/login" class="option-btn">login</a>
-                        <a href="/register" class="option-btn">register</a>
-                    {% endif %}
                 </div>
-            </div>
+                {% else %}
+                <div class="flex-btn">
+                    <a href="/login" class="option-btn">login</a>
+                    <a href="/register" class="option-btn">register</a>
+                    <div class="flex-btn">
+                        {% endif %}
+                    </div>
+                </div>
 
         </section>
 
@@ -56,18 +64,17 @@
         <div id="close-btn">
             <i class="fas fa-times"></i>
         </div>
-
         {% if user.is_authenticated %}
-            <div class="profile">
-                <h3 class="name">Welcome, {{ user.username }}</h3>
-                <a href="/profile" class="btn">view profile</a>
+        <div class="profile">
+            <a href="/profile"><img src="{% static 'general/images/pic-1.jpg' %}" class="image" alt=""></a>
         </div>
         {% endif %}
 
         <nav class="navbar">
-            <a href="/home"><i class="fas fa-home"></i><span>home</span></a>
-            <a href="/courses"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
-            <a href="/ranking"><i class="fas fa-chalkboard-user"></i><span>Ranking</span></a>
+            <a href="/home"><i class="fas fa-home"></i></a>
+            <a href="/courses"><i class="fas fa-graduation-cap"></i></a>
+            <a href="/calender"><i class="fa-solid fa-calendar-days"></i></a>
+            <a href="/leaderboard"><i class="fa-solid fa-ranking-star"></i></a>
         </nav>
 
     </div>
@@ -187,14 +194,14 @@
         </div>
     </section>
     {% endif %}
+
     <footer class="footer">
 
         &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!
 
     </footer>
 
-    <script src="{%static 'authentication/js/script.js'%}"></script>
-
+    <script src="{%static 'general/js/script.js'%}"></script>
 
 </body>
 

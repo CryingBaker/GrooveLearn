@@ -10,6 +10,9 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def teacher_name(self):
+        return self.teacher.username
 
 class Module(models.Model):
     title = models.CharField(max_length=100)

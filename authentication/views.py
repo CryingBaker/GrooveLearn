@@ -25,6 +25,7 @@ def register(request):
                 else:
                         myuser = User.objects.create_user(username,email,password)
                         myuser.first_name = name
+                        myuser.role = 'student'
                         myuser.save()
                         messages.success(request, 'Your account has been created successfully')
                         return redirect('/login')
@@ -80,5 +81,3 @@ def updateprofile(request):
         messages.success(request, 'Profile updated successfully')
         return redirect('profile')
     return render(request, 'authentication/updateprofile.html')
-
-    

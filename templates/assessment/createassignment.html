@@ -81,40 +81,43 @@
 
     <section class="home-grid">
 
-        <section class="playlist-videos">
-
-            <h1 class="heading">{{ course }}</h1>
-            {% if is_teacher_of_course == False%}
-            <div class="box-container">
-                
-                <a href = "" class = "inline-btn">Assessment</a>
-
-            </div>
-            {%else%}
-            <h2>Manage Courses</h2>
-            <div class="box-container">
-                <a href = "/createassignment" class = "inline-btn">Create Assignment</a>
-                <a href="" class="inline-btn">Create Quiz</a>
-                <a href="" class="inline-btn">Edit Assignment</a>
-                <a href="" class="inline-btn">Edit Quiz</a>
-            </div>
-            {%endif%}
-            <br>
-            <h1 class="heading">Assignments</h1>
-            <div class="box-container">
-                {% for assignment in assignments %}
-                <a href="/viewassignment/{{assignment.id}}" class="inline-btn">{{assignment.title}} (Due:{{assignment.due_date}})</a>
+    </section>
+    <section class="form-container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h3>Create Assignment</h3>
+    
+            <p>Title <span>*</span></p>
+            <input type="text" id="title" name="title" placeholder="Enter assignment title" required maxlength="50" class="box">
+    
+            <p>Description <span>*</span></p>
+            <textarea id="description" name="description" placeholder="Enter assignment description" required class="box"></textarea>
+    
+            <p>Course <span>*</span></p>
+            <select id="course" name="course" required class="box">
+                <option value="" disabled selected>Select Course</option>
+                {% for course in courses %}
+                <option value="{{course.id}}">{{course.title}}</option>
                 {% endfor %}
-            </div>
+            </select>
+    
+            <p>Due Date <span>*</span></p>
+            <input type="datetime-local" id="due_date" name="due_date" required class="box">
+    
+            <p>File</p>
+            <input type="file" id="file" name="file" class="box">
+    
+            <input type="submit" value="Create Assignment" class="btn">
+        </form>
+    </section>
 
-        </section>
-        <footer class="footer">
+    <footer class="footer">
 
-            &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!
+        &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!
 
-        </footer>
+    </footer>
 
-        <script src="{%static 'general/js/script.js'%}"></script>
+    <script src="{%static 'general/js/script.js'%}"></script>
 
 </body>
 

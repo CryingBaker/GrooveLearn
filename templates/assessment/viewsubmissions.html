@@ -78,23 +78,14 @@
         </nav>
 
     </div>
+
     <section class="home-grid">
-        <h1 class="heading">{{ assignment.title }}</h1>
-        <h2>Due Date: {{ assignment.due_date }}</p>
-        <p>Description: {{ assignment.description }}</p>
-        {% if assignment.file %}
-            <p>File: <a href="{{ assignment.file.url }}">Download</a></p>
-        {% endif %}
-        {% if not score %}
-        <form method="post" action="/submitassignment/{{assignment.id}}/" enctype="multipart/form-data" >
-            {% csrf_token %}
-            <label for="file">Upload your assignment:</label>
-            <input type="file" id="file" name="file">
-            <button class="inline-btn">Submit</button>
-        </form>
-        {% else %}
-            <p>You have already submitted this assignment. Your score is: {{ score }}</p>
-        {% endif %}
+        <h1 class="heading">Assignments</h1>
+                <div class="box-container">
+                    {% for assignment in assignments %}
+                    <a href="/gradeassignments/{{assignment.id}}/" class="inline-btn">{{assignment.title}} (Due:{{assignment.due_date}})</a>
+                    {% endfor %}
+                </div>
     </section>
     <footer class="footer">
 

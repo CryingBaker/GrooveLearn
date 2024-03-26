@@ -78,24 +78,37 @@
         </nav>
 
     </div>
+
     <section class="home-grid">
-        <h1 class="heading">{{ assignment.title }}</h1>
-        <h2>Due Date: {{ assignment.due_date }}</p>
-        <p>Description: {{ assignment.description }}</p>
-        {% if assignment.file %}
-            <p>File: <a href="{{ assignment.file.url }}">Download</a></p>
-        {% endif %}
-        {% if not score %}
-        <form method="post" action="/submitassignment/{{assignment.id}}/" enctype="multipart/form-data" >
-            {% csrf_token %}
-            <label for="file">Upload your assignment:</label>
-            <input type="file" id="file" name="file">
-            <button class="inline-btn">Submit</button>
-        </form>
-        {% else %}
-            <p>You have already submitted this assignment. Your score is: {{ score }}</p>
-        {% endif %}
+        <h1>Assignment Submissions</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>File</th>
+                    <th>Grade</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in submissions %}
+                <tr>
+                    <td>{{ submission.user.username }}</td>
+                    <td><a href="{{ submission.file.url }}">Download</a></td>
+                    <td>{{ submission.score }}</td>
+                    <td>
+                        <form action="/scoreassignment/{{submission.id}}/" method="POST">
+                            {% csrf_token %}
+                            <input type="number" name="grade" min="0" max="100" value="{{ submission.score }}">
+                            <input type="submit" value="Update Grade">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </section>
+
     <footer class="footer">
 
         &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!

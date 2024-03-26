@@ -86,24 +86,26 @@
             <h1 class="heading">{{ course }}</h1>
             {% if is_teacher_of_course == False%}
             <div class="box-container">
-                
-                <a href = "" class = "inline-btn">Assessment</a>
+
+                <a href="" class="inline-btn">Assessment</a>
 
             </div>
             {%else%}
             <h2>Manage Courses</h2>
             <div class="box-container">
-                <a href = "/createassignment" class = "inline-btn">Create Assignment</a>
+                <a href="/createassignment" class="inline-btn">Create Assignment</a>
                 <a href="" class="inline-btn">Create Quiz</a>
                 <a href="" class="inline-btn">Edit Assignment</a>
                 <a href="" class="inline-btn">Edit Quiz</a>
+                <a href="/viewsubmissions" class="inline-btn">View Submissions</a>
             </div>
             {%endif%}
             <br>
             <h1 class="heading">Assignments</h1>
             <div class="box-container">
                 {% for assignment in assignments %}
-                <a href="/viewassignment/{{assignment.id}}" class="inline-btn">{{assignment.title}} (Due:{{assignment.due_date}})</a>
+                <a href="/viewassignment/{{assignment.id}}/" class="inline-btn">{{assignment.title}}
+                    (Due:{{assignment.due_date}})</a>
                 {% endfor %}
             </div>
 

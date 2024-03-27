@@ -20,7 +20,7 @@ def courses(request):
     return render(request, 'courses/courses.html',{'courses':all_courses})
 
 def viewcourses(request, course_name):  
-    assignments = listassignments(request)
+    assignments = listassignments(request, course_name)
     course = Course.objects.get(title=course_name)
     user_role = get_user_role(request.user)
     is_teacher_of_course = False

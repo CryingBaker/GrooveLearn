@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chilanka&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="{%static 'general/css/style.css'%}">
+
+</head>
+
+<body>
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissable fade show" role="alert">
+        <strong>Message:</strong>{{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+
+    <header class="header">
+
+        <section class="flex">
+
+            <a href="/home" class="logo">GrooveLearn</a>
+
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+            </div>
+            <div class="profile">
+                {% if user.is_authenticated %}
+                <img src="{%static 'general/images/pic-1.jpg'%}" class="image" alt="">
+                <h3 class="name">{{ user.username }}</h3>
+                <!-- <p class="role">{{user.role}}</p> -->
+                <div class="flex-btn">
+                    <a href="/profile" class="btn">view profile</a>
+                    <a href="/logout" class="option-btn">logout</a>
+                </div>
+                {% else %}
+                <div class="flex-btn">
+                    <a href="/login" class="option-btn">login</a>
+                    <a href="/register" class="option-btn">register</a>
+                    <div class="flex-btn">
+                        {% endif %}
+                    </div>
+                </div>
+
+        </section>
+
+    </header>
+
+    <div class="side-bar">
+
+        <div id="close-btn">
+            <i class="fas fa-times"></i>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="profile">
+            <a href="/profile"><img src="{% static 'general/images/pic-1.jpg' %}" class="image" alt=""></a>
+        </div>
+        {% endif %}
+
+        <nav class="navbar">
+            <a href="/home"><i class="fas fa-home"></i></a>
+            <a href="/courses"><i class="fas fa-graduation-cap"></i></a>
+            <a href="/calender"><i class="fa-solid fa-calendar-days"></i></a>
+            <a href="/leaderboard"><i class="fa-solid fa-ranking-star"></i></a>
+        </nav>
+
+    </div>
+
+    <section class="home-grid">
+        <section class="form-container">
+            <form id="quiz-form" action="/createquiz" method="post" enctype="application/x-www-form-urlencoded">
+                {% csrf_token %}
+                <h3>Create Quiz</h3>
+                <p>Quiz Title <span>*</span></p>
+                <input type="text" name="title" placeholder="Enter quiz title" required maxlength="100" class="box">
+                <p>Quiz Description <span>*</span></p>
+                <textarea name="description" placeholder="Enter quiz description" required class="box"></textarea>
+                <p>Course <span>*</span></p>
+                <select id="course" name="course" required class="box">
+                    <option value="" disabled selected>Select Course</option>
+                    {% for course in courses %}
+                    <option value="{{course.id}}">{{course.title}}</option>
+                    {% endfor %}
+                </select>
+                <div id="questions">
+                    <!-- Questions will be added here -->
+                </div>
+                <button type="button" id="add-question" class="btn">Add Question</button>
+                <input type="hidden" id="questions-data" name="questions" value="0">
+                <input type="submit" value="Create Quiz" name="submit" class="btn">
+            </form>
+        </section>
+
+    </section>
+
+    &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!
+
+    </footer>
+
+    <script src="{%static 'general/js/script.js'%}"></script>
+    <script>
+        document.getElementById('add-question').addEventListener('click', function () {
+            var questions = document.getElementById('questions');
+            var question = document.createElement('div');
+            question.innerHTML = `
+                <p>Question Text <span>*</span></p>
+                <input type="text" name="question_text" placeholder="Enter question text" required maxlength="200" class="box">
+                <div class="choices">
+                    <p>Choice Text <span>*</span></p>
+                    <input type="text" name="choice_text" placeholder="Enter choice text" required maxlength="200" class="box">
+                    <p>Is Correct <span>*</span></p>
+                    <input type="checkbox" name="is_correct" class="box">
+                </div>
+                <button type="button" class="add-choice btn">Add Choice</button>
+            `;
+            question.querySelector('.add-choice').addEventListener('click', function () {
+                var choice = document.createElement('div');
+                choice.className = 'choices';
+                choice.innerHTML = `
+                    <p>Choice Text <span>*</span></p>
+                    <input type="text" name="choice_text" placeholder="Enter choice text" required maxlength="200" class="box">
+                    <p>Is Correct <span>*</span></p>
+                    <input type="checkbox" name="is_correct" class="box">
+                `;
+                question.insertBefore(choice, this);
+            });
+            questions.appendChild(question);
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('quiz-form').addEventListener('submit', function (event) {
+                event.preventDefault(); 
+
+                var questions = [];
+                var questionElements = document.querySelectorAll('#questions > div');
+                for (var i = 0; i < questionElements.length; i++) {
+                    var questionElement = questionElements[i];
+                    var questionText = questionElement.querySelector('input[name="question_text"]').value;
+                    var choices = [];
+                    var choiceElements = questionElement.querySelectorAll('.choices > div');
+                    for (var j = 0; j < choiceElements.length; j++) {
+                        var choiceElement = choiceElements[j];
+                        var choiceText = choiceElement.querySelector('input[name="choice_text"]').value;
+                        var isCorrect = choiceElement.querySelector('input[name="is_correct"]').checked;
+                        choices.push({ choice_text: choiceText, is_correct: isCorrect });
+                    }
+                    questions.push({ question_text: questionText, choices: choices });
+                }
+
+                document.getElementById('questions-data').value = JSON.stringify(questions);
+
+                event.target.submit();
+            });
+        });
+    </script>
+</body>
+
+</html>

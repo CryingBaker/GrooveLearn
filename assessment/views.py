@@ -1,6 +1,7 @@
+import json
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
-from .models import Assignment, AssignmentSubmission
+from .models import Assignment, AssignmentSubmission, Quiz, MCQQuestion, MCQChoice, QuizSubmission
 from courses.models import Course
 from django.shortcuts import redirect
 from django.core.files.storage import FileSystemStorage
@@ -36,10 +37,14 @@ def createassignment(request):
         )
         return redirect('/courses')
     else:
-        courses = Course.objects.all()
+        user_role = get_user_role(request.user)
+        if user_role == 'Teacher':
+            courses = request.user.teacher.courses.all()
+        else:
+            courses = Course.objects.none()  
         return render(request, 'assessment/createassignment.html', {'courses': courses})
     
-def listassignments(request):
+def listassignments(request, course_name):
     user_role = get_user_role(request.user)
     if user_role == 'Student':
         courses = request.user.student.courses.all()
@@ -47,8 +52,8 @@ def listassignments(request):
         courses = request.user.teacher.courses.all()
     else:
         courses = Course.objects.all()
-
-    assignments = Assignment.objects.filter(course__in=courses)
+    course = Course.objects.get(title=course_name)
+    assignments = Assignment.objects.filter(course=course)
     return assignments
 
 def viewassignment(request, assignment_id):
@@ -87,3 +92,52 @@ def scoreassignment(request, submission_id):
         submission.save()
         return redirect('gradeassignments', assignment_id=submission.assignment.id)
     return render(request, 'assessment/scoreassignments.html', {'submission': submission})
+
+def createquiz(request):
+    user_role = get_user_role(request.user)
+    if user_role == 'Teacher':
+        courses = request.user.teacher.courses.all()
+    else:
+        courses = Course.objects.none()
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        course_id = request.POST.get('course')
+        course = Course.objects.get(id=course_id)
+
+        quiz = Quiz.objects.create(
+            title=title,
+            description=description,
+            course=course
+        )
+
+        questions_data = request.POST.get('questions')
+        print(f'Raw questions_data: {questions_data}')
+        if questions_data is not None:
+            questions_data = json.loads(questions_data)
+            
+        questions_data = request.POST.get('questions')
+        if questions_data is not None:
+            questions_data = json.loads(questions_data)
+            if isinstance(questions_data, list):
+                for question_data in questions_data:
+                    question_text = question_data['question_text']
+                    question = MCQQuestion.objects.create(
+                        text=question_text,
+                        quiz=quiz
+                    )
+
+                    for choice_data in question_data['choices']:
+                        choice_text = choice_data['choice_text']
+                        is_correct = choice_data['is_correct']
+                        MCQChoice.objects.create(
+                            text=choice_text,
+                            is_correct=is_correct,
+                            question=question
+                        )
+            else:
+                print(f'Unexpected questions_data: {questions_data}')
+                return redirect('/courses')
+
+    return render(request, 'assessment/createquiz.html', {'courses': courses})

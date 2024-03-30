@@ -63,13 +63,18 @@ def viewassignment(request, assignment_id):
         score = submission.score
     except AssignmentSubmission.DoesNotExist:
         score = None
-    return render(request, 'assessment/viewassignment.html', {'assignment': assignment,'score': score})
+        submission = None
+    return render(request, 'assessment/viewassignment.html', {'assignment': assignment,'score': score,'submission': submission})
 
 def submitassignment(request, assignment_id):
     assignment = get_object_or_404(Assignment, id=assignment_id)
     if request.method == 'POST':
         uploaded_file = request.FILES['file']
-        submission = AssignmentSubmission(user=request.user, assignment=assignment, file=uploaded_file)
+        try:
+            submission = AssignmentSubmission.objects.get(user=request.user, assignment=assignment)
+            submission.file = uploaded_file
+        except AssignmentSubmission.DoesNotExist:
+            submission = AssignmentSubmission(user=request.user, assignment=assignment, file=uploaded_file)
         submission.save()
         return redirect('viewassignment', assignment_id=assignment_id)
     return render(request, 'assessment/viewassignment.html', {'assignment': assignment})

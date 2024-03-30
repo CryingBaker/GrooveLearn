@@ -82,15 +82,14 @@
     <div class="container">
         <!-- <h1><img width="35" height="35" src="https://img.icons8.com/ios/50/course-assign.png" alt="course-assign" />
             Submit Assignment</h1> -->
-        <form action="/submitassignment/{{ assignment.id }}/" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
+        <form action="/submitassignment/{{ assignment.id }}" method="post" enctype="multipart/form-data">
             <div class="left">
                 <h1><label for="title">{{ assignment.title }}</label></h1>
+                <h3>Due Date: {{ assignment.due_date }}</h3>
                 <h2><label for="description">Description:</label></h2>
                 <p>{{assignment.description}}</p>
-                <p>Due on {{assignment.due_date}}</p>
                 {% if assignment.file %}
-                <h6><a href="{{ assignment.file.url }}">Download File</a></h6>
+                <h2><a href="{{ assignment.file.url }}">Download File</a></h2>
                 {% endif %}
             </div>
             <div class="right">
@@ -99,30 +98,29 @@
                 <h3><img width="20" height="20" src="https://img.icons8.com/emoji/48/star-emoji.png" alt="star-emoji" />
                     +{{ score }}</h3>
                 {% endif %}
-                {% if submission.file %}
-                <a href="{{submission.file.url}}">Submitted File</a>
-                {% endif %}
                 {% if not score %}
                 <div class="options">
-                    <input type="file" value="Add Documents" id="upload-button" class="option" name="file">
+                    <button type="button" id="upload-button" class="option">
+                        <h3>+ Add Documents</h3>
+                    </button>
                 </div>
-                <input type="submit" value="Turn In" class="submit-btn">
                 {% else %}
                 <div class="options">
                     <button disabled>
                         <h3>+ Add Documents</h3>
                     </button>
                 </div>
-                <button disabled>Turn In</button>
                 {% endif %}
+
+                <input type="submit" value="Turn In" class="submit-btn">
             </div>
         </form>
     </div>
-    <!-- <footer class="footer">
+    <footer class="footer">
 
         &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!
 
-    </footer> -->
+    </footer>
 
     <script src="{%static 'general/js/script.js'%}"></script>
 

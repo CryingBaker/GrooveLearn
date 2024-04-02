@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Chilanka&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="{%static 'general/css/style.css'%}">
-    <link rel="stylesheet" href="{%static 'general/css/stream.css'%}">
 
 </head>
 
@@ -79,60 +78,53 @@
         </nav>
 
     </div>
-    <section class="postbox">
-        <div class="banner">
-            <div class="c-title">
-                <h1>{{ course }}</h1>
+
+    <section class="home-grid">
+        <section class="postbox">
+            <div class="banner">
+                <div class="c-title">
+                    <h1>{{ course }}</h1>
+                </div>
             </div>
-        </div>
-        {% if is_teacher_of_course == False%}
-        <div class="createpost">
-            <a href="/viewquiz/{{course}}/">
+            {% if is_teacher_of_course == False%}
+            <div class="createpost">
                 <h5>+ Assessment</h5>
-            </a>
-        </div>
-        {%else%}
-        <div class="createpost">
-            <a href="/createassignment">
-                <h5>+ Create Assignment</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="/createquiz">
-                <h5>+ Create Quiz</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="">
-                <h5>+ Edit Assignment</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="">
-                <h5>+ Edit Quiz</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="/viewsubmissions">
-                <h5>+ View Submissions</h5>
-            </a>
-        </div>
-        </div>
-        {%endif%}
-        <h1>Posts</h1>
-        {% for assignment in assignments %}
-        <div class="post">
-            <div class="explogo">
-                <img width="30" height="30" src="https://img.icons8.com/ios/50/course-assign.png" alt="course-assign" />
-                <a href="/viewassignment/{{assignment.id}}/">
-                    <h5>{{ assignment.title }}</h5>
+            </div>
+            {%else%}
+            <h1>Posts</h1>
+            <div class="createpost">
+                <a href="/createassignment" class="inline-btn">
+                    <h5>+ Create Assignment</h5>
+                </a>
+                <a href="/createquiz" class="inline-btn">
+                    <h5>+ Create Quiz</h5>
+                </a>
+                <a href="" class="inline-btn">
+                    <h5>+ Edit Assignment</h5>
+                </a>
+                <a href="" class="inline-btn">
+                    <h5>+ Edit Quiz</h5>
+                </a>
+                <a href="/viewsubmissions" class="inline-btn">
+                    <h5>+ View Submissions</h5>
                 </a>
             </div>
-            <div class="due">
-                Due: {{ assignment.due_date }}
+            {%endif%}
+            {% for assignment in assignments %}
+            <div class="post">
+                <div class="explogo">
+                    <img width="30" height="30" src="https://img.icons8.com/ios/50/course-assign.png"
+                        alt="course-assign" />
+                    <a href="/viewassignment/{{assignment.id}}/">
+                        <h5>{{ assignment.title }}</h5>
+                    </a>
+                </div>
+                <div class="due">
+                    Due: {{ assignment.due_date }}
+                </div>
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        </section>
     </section>
     <footer class="footer">
 

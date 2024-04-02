@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Chilanka&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="{%static 'general/css/style.css'%}">
-    <link rel="stylesheet" href="{%static 'general/css/stream.css'%}">
 
 </head>
 
@@ -79,61 +78,47 @@
         </nav>
 
     </div>
-    <section class="postbox">
-        <div class="banner">
-            <div class="c-title">
-                <h1>{{ course }}</h1>
+
+    <section class="home-grid">
+
+        <h1 class="heading">quick options</h1>
+
+        <div class="box-container">
+            <div class="box">
+                <h3 class="title">become a Ranker</h3>
+                <p class="tutor">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis, nam?</p>
+                <a href="/ranking" class="inline-btn">get started</a>
             </div>
+
         </div>
-        {% if is_teacher_of_course == False%}
-        <div class="createpost">
-            <a href="/viewquiz/{{course}}/">
-                <h5>+ Assessment</h5>
-            </a>
-        </div>
-        {%else%}
-        <div class="createpost">
-            <a href="/createassignment">
-                <h5>+ Create Assignment</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="/createquiz">
-                <h5>+ Create Quiz</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="">
-                <h5>+ Edit Assignment</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="">
-                <h5>+ Edit Quiz</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="/viewsubmissions">
-                <h5>+ View Submissions</h5>
-            </a>
-        </div>
-        </div>
-        {%endif%}
-        <h1>Posts</h1>
-        {% for assignment in assignments %}
-        <div class="post">
-            <div class="explogo">
-                <img width="30" height="30" src="https://img.icons8.com/ios/50/course-assign.png" alt="course-assign" />
-                <a href="/viewassignment/{{assignment.id}}/">
-                    <h5>{{ assignment.title }}</h5>
-                </a>
-            </div>
-            <div class="due">
-                Due: {{ assignment.due_date }}
-            </div>
-        </div>
-        {% endfor %}
+
     </section>
+    {% if user.is_authenticated %}
+    <section class="quiz">
+        <h1 class="heading">{{ quiz }}</h1>
+
+        <div class="progress">
+            <div class="progress-bar" style="width: 50%;">50%</div>
+        </div>
+
+        <div class="quiz-container">
+            <div class="question">
+                <h2>Question 1</h2>
+                <input type="radio" name="question1" value="a"> Choice A<br>
+                <input type="radio" name="question1" value="b"> Choice B<br>
+                <input type="radio" name="question1" value="c"> Choice C<br>
+                <input type="radio" name="question1" value="d"> Choice D<br>
+            </div>
+            <!-- Add more questions as needed -->
+        </div>
+
+        <button class="submit-btn">Submit Quiz</button>
+    </section>
+    {% else %}
+    <section class="quiz">
+        <h1 class="heading">Login to view this content</h1>
+    </section>
+    {% endif %}
     <footer class="footer">
 
         &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!

@@ -85,51 +85,14 @@
                 <h1>{{ course }}</h1>
             </div>
         </div>
-        {% if is_teacher_of_course == False%}
-        <div class="createpost">
-            <a href="/viewquiz/{{course}}/">
-                <h5>+ Assessment</h5>
-            </a>
-        </div>
-        {%else%}
-        <div class="createpost">
-            <a href="/createassignment">
-                <h5>+ Create Assignment</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="/createquiz">
-                <h5>+ Create Quiz</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="">
-                <h5>+ Edit Assignment</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="">
-                <h5>+ Edit Quiz</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="/viewsubmissions">
-                <h5>+ View Submissions</h5>
-            </a>
-        </div>
-        </div>
-        {%endif%}
-        <h1>Posts</h1>
-        {% for assignment in assignments %}
+        <h1>Quizzes</h1>
+        {% for quiz in quizzes %}
         <div class="post">
             <div class="explogo">
-                <img width="30" height="30" src="https://img.icons8.com/ios/50/course-assign.png" alt="course-assign" />
-                <a href="/viewassignment/{{assignment.id}}/">
-                    <h5>{{ assignment.title }}</h5>
+                <img width="30" height="30" src="https://img.icons8.com/ios/50/quiz.png" alt="quiz" />
+                <a href="/quiz/{{quiz.id}}/">
+                    <h5>{{ quiz.title }}</h5>
                 </a>
-            </div>
-            <div class="due">
-                Due: {{ assignment.due_date }}
             </div>
         </div>
         {% endfor %}

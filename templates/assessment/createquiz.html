@@ -95,12 +95,14 @@
                     <option value="{{course.id}}">{{course.title}}</option>
                     {% endfor %}
                 </select>
+                <p>Points per question:</p>
+                <input type="number" name="points" placeholder="Enter points per question" required class="box">
                 <div id="questions">
                     <!-- Questions will be added here -->
                 </div>
                 <button type="button" id="add-question" class="btn">Add Question</button>
                 <input type="hidden" id="questions-data" name="questions" value="0">
-                <input type="submit" value="Create Quiz" name="submit" class="btn">
+                <button class="btn">Submit</button>
             </form>
         </section>
 
@@ -116,34 +118,34 @@
             var questions = document.getElementById('questions');
             var question = document.createElement('div');
             question.innerHTML = `
-                <p>Question Text <span>*</span></p>
-                <input type="text" name="question_text" placeholder="Enter question text" required maxlength="200" class="box">
-                <div class="choices">
-                    <p>Choice Text <span>*</span></p>
-                    <input type="text" name="choice_text" placeholder="Enter choice text" required maxlength="200" class="box">
-                    <p>Is Correct <span>*</span></p>
-                    <input type="checkbox" name="is_correct" class="box">
-                </div>
-                <button type="button" class="add-choice btn">Add Choice</button>
-            `;
+        <p>Question Text <span>*</span></p>
+        <input type="text" name="question_text" placeholder="Enter question text" required maxlength="200" class="box">
+        <div class="choices">
+            <p>Choice Text <span>*</span></p>
+            <input type="text" name="choice_text" placeholder="Enter choice text" required maxlength="200" class="box">
+            <p>Is Correct <span>*</span></p>
+            <input type="checkbox" name="is_correct" class="box">
+        </div>
+        <button type="button" class="add-choice btn">Add Choice</button>
+    `;
             question.querySelector('.add-choice').addEventListener('click', function () {
                 var choice = document.createElement('div');
                 choice.className = 'choices';
                 choice.innerHTML = `
-                    <p>Choice Text <span>*</span></p>
-                    <input type="text" name="choice_text" placeholder="Enter choice text" required maxlength="200" class="box">
-                    <p>Is Correct <span>*</span></p>
-                    <input type="checkbox" name="is_correct" class="box">
-                `;
+            <p>Choice Text <span>*</span></p>
+            <input type="text" name="choice_text" placeholder="Enter choice text" required maxlength="200" class="box">
+            <p>Is Correct <span>*</span></p>
+            <input type="checkbox" name="is_correct" class="box">
+        `;
                 question.insertBefore(choice, this);
             });
             questions.appendChild(question);
         });
-    </script>
-    <script>
+
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('quiz-form').addEventListener('submit', function (event) {
-                event.preventDefault(); 
+            var quizForm = document.getElementById('quiz-form');
+            var onSubmit = function (event) {
+                event.preventDefault();
 
                 var questions = [];
                 var questionElements = document.querySelectorAll('#questions > div');
@@ -151,7 +153,7 @@
                     var questionElement = questionElements[i];
                     var questionText = questionElement.querySelector('input[name="question_text"]').value;
                     var choices = [];
-                    var choiceElements = questionElement.querySelectorAll('.choices > div');
+                    var choiceElements = questionElement.querySelectorAll('.choices');
                     for (var j = 0; j < choiceElements.length; j++) {
                         var choiceElement = choiceElements[j];
                         var choiceText = choiceElement.querySelector('input[name="choice_text"]').value;
@@ -163,10 +165,15 @@
 
                 document.getElementById('questions-data').value = JSON.stringify(questions);
 
+                quizForm.removeEventListener('submit', onSubmit);  // Remove the event listener
                 event.target.submit();
-            });
+                quizForm.addEventListener('submit', onSubmit);  // Add the event listener back
+            };
+
+            quizForm.addEventListener('submit', onSubmit);
         });
     </script>
+
 </body>
 
 </html>

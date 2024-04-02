@@ -12,6 +12,8 @@ urlpatterns = [
     path('gradeassignments/<int:assignment_id>/', views.gradeassignments, name='gradeassignments'),
     path("scoreassignment/<int:submission_id>/", views.scoreassignment, name="scoreassignment"),    
     path('createquiz', views.createquiz, name='createquiz'),
+    path('viewquiz/<str:course_name>/', views.viewquiz, name='viewquiz'),
+    path('quiz/<int:quiz_id>/', views.quiz, name='quiz'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

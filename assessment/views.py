@@ -5,6 +5,14 @@ from .models import Assignment, AssignmentSubmission, Quiz, MCQQuestion, MCQChoi
 from courses.models import Course
 from django.shortcuts import redirect
 from django.core.files.storage import FileSystemStorage
+from django.shortcuts import get_object_or_404
+from django import template
+
+register = template.Library()
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
 
 def get_user_role(user):
     if hasattr(user, 'student'):
@@ -110,11 +118,13 @@ def createquiz(request):
         description = request.POST.get('description')
         course_id = request.POST.get('course')
         course = Course.objects.get(id=course_id)
+        pointsperquestion = request.POST.get('points')
 
         quiz = Quiz.objects.create(
             title=title,
             description=description,
-            course=course
+            course=course,
+            pointsperquestion=pointsperquestion,
         )
 
         questions_data = request.POST.get('questions')
@@ -129,15 +139,14 @@ def createquiz(request):
                 for question_data in questions_data:
                     question_text = question_data['question_text']
                     question = MCQQuestion.objects.create(
-                        text=question_text,
+                        question_text=question_text,
                         quiz=quiz
                     )
-
                     for choice_data in question_data['choices']:
                         choice_text = choice_data['choice_text']
                         is_correct = choice_data['is_correct']
                         MCQChoice.objects.create(
-                            text=choice_text,
+                            choice_text=choice_text,
                             is_correct=is_correct,
                             question=question
                         )
@@ -146,3 +155,14 @@ def createquiz(request):
                 return redirect('/courses')
 
     return render(request, 'assessment/createquiz.html', {'courses': courses})
+
+def viewquiz(request, course_name):
+    course = Course.objects.get(title=course_name)
+    quizzes = Quiz.objects.filter(course=course)
+    return render(request, 'assessment/viewquiz.html', {'quizzes': quizzes, 'course': course})
+
+def quiz(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    questions = MCQQuestion.objects.filter(quiz=quiz).order_by('?')
+    choices = {question: MCQChoice.objects.filter(question=question).order_by('?') for question in questions}
+    return render(request, 'quiz/quiz.html', {'quiz': quiz, 'questions': questions, 'choices': choices})

@@ -44,77 +44,6 @@ html::-webkit-scrollbar-thumb {
    background-color: var(--main-color);
 }
 
-.createpost {
-   width: 135px;
-   height: 45px;
-   padding: 10px;
-   border-radius: 50px;
-   background-color: white;
-   color: var(--main-color);
-   ;
-}
-
-.post {
-   height: 75px;
-   width: 100%;
-   margin-top: 20px;
-   border-radius: 15px;
-   padding: 20px;
-   background-color: white;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-}
-
-.explogo {
-   background-color: white;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-}
-
-.explogo img {
-   margin-right: 20px;
-}
-
-.banner {
-   width: 100%;
-   height: 300px;
-   margin-bottom: 20px;
-   border-radius: 15px;
-   padding: 20px;
-   background-color: var(--black);
-   ;
-   display: flex;
-   color: white;
-   font-size: 30px;
-   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.c-title {
-   display: flex;
-   align-items: flex-end;
-   position: relative;
-}
-
-.postbox {
-   font-size: 20px;
-   padding: 20px;
-   width: 100%;
-}
-
-.due {
-   width: 150px;
-   height: 40px;
-   background-color: rgb(202, 255, 202);
-   color: #006b21;
-   justify-content: center;
-   align-items: center;
-   font-size: 15px;
-   padding: 10px;
-   border-radius: 40px;
-}
-
 body {
    background-color: var(--light-bg);
 }
@@ -630,6 +559,8 @@ section {
    gap: 1.5rem;
    justify-content: center;
    align-items: flex-start;
+   margin-top: 10px;
+
 }
 
 .courses .box-container .box {
@@ -642,7 +573,8 @@ section {
    display: flex;
    align-items: center;
    gap: 1.5rem;
-   margin-bottom: 2.5rem;
+   margin-bottom: 1rem;
+   justify-content: space-between;
 }
 
 .courses .box-container .box .tutor img {
@@ -656,6 +588,22 @@ section {
    font-size: 1.8rem;
    color: var(--black);
    margin-bottom: .2rem;
+}
+
+.c-banner {
+   width: 100%;
+   height: 100px;
+   margin-bottom: 10px;
+   border-radius: 5px;
+   padding: 10px;
+   background-color: var(--black);
+   ;
+   display: flex;
+   font-size: 30px;
+   color: white;
+   display: flex;
+   align-items: flex-end;
+
 }
 
 .courses .box-container .box .tutor span {
@@ -687,7 +635,7 @@ section {
 
 .courses .box-container .box .title {
    font-size: 2rem;
-   color: var(--black);
+   color: white;
    padding-bottom: .5rem;
    padding-top: 1rem;
 }
@@ -1706,6 +1654,86 @@ tbody td.active {
 .export__file .export__file-options img {
    width: 2rem;
    height: auto;
+}
+
+.createpost {
+   width: 135px;
+   height: 45px;
+   padding: 10px;
+   border-radius: 50px;
+   background-color: white;
+   color: var(--main-color);
+   ;
+   font-size: 20px;
+}
+
+.post {
+   height: 75px;
+   width: 100%;
+   margin-top: 20px;
+   border-radius: 15px;
+   padding: 20px;
+   background-color: white;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   color: black;
+}
+
+.explogo {
+   background-color: white;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.explogo img {
+   margin-right: 20px;
+}
+
+.banner {
+   width: 100%;
+   height: 300px;
+   margin-bottom: 20px;
+   border-radius: 15px;
+   padding: 20px;
+   background-color: var(--black);
+   ;
+   display: flex;
+   color: white;
+   font-size: 30px;
+   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.c-title {
+   display: flex;
+   align-items: flex-end;
+   position: relative;
+}
+
+.postbox {
+   font-size: 20px;
+   padding: 20px;
+   width: 100%;
+}
+
+.due {
+   width: 150px;
+   height: 40px;
+   background-color: rgb(202, 255, 202);
+   color: #006b21;
+   justify-content: center;
+   align-items: center;
+   font-size: 15px;
+   padding: 10px;
+   border-radius: 40px;
+}
+
+.inline {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: 15px;
 }
 
 @media (max-width:1200px) {

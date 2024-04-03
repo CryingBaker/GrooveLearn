@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="{%static 'general/css/style.css'%}">
     <link rel="stylesheet" href="{%static 'general/css/styles.css'%}">
+    <link rel="stylesheet" href="{%static 'general/css/stream.css'%}">
 
 </head>
 
@@ -88,17 +89,22 @@
                 <h1><label for="title">{{ assignment.title }}</label></h1>
                 <h2><label for="description">Description:</label></h2>
                 <p>{{assignment.description}}</p>
-                <p>Due on {{assignment.due_date}}</p>
                 {% if assignment.file %}
                 <h6><a href="{{ assignment.file.url }}">Download File</a></h6>
                 {% endif %}
             </div>
             <div class="right">
                 <h2><label for="file">Your Work</label></h2>
-                {% if score %}
-                <h3><img width="20" height="20" src="https://img.icons8.com/emoji/48/star-emoji.png" alt="star-emoji" />
-                    +{{ score }}</h3>
-                {% endif %}
+                <div class="inline">
+                    <div class="due">
+                        Due: {{assignment.due_date}}
+                    </div>
+                    {% if score %}
+                    <h3><img width="20" height="20" src="https://img.icons8.com/emoji/48/star-emoji.png"
+                            alt="star-emoji" />
+                        +{{ score }}</h3>
+                    {% endif %}
+                </div>
                 {% if submission.file %}
                 <a href="{{submission.file.url}}">Submitted File</a>
                 {% endif %}

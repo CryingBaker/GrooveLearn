@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Chilanka&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="{%static 'general/css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'general/css/courses.css'%}">
 
 </head>
 
@@ -78,22 +79,29 @@
         </nav>
 
     </div>
-
     {% if user.is_authenticated %}
     <section class="courses">
+        <h1 class="heading">Courses</h1>
+        <div class="createpost">
+            <h5>+ Add Course</h5>
+        </div>
 
-        <h1 class="heading">our courses</h1>
         <div class="box-container">
             {% for i in courses %}
-                <div class="box">
-                    <div class="thumb">
-                        <img src="images/thumb-1.png" alt="">
-                    </div>
-                    <h3 class="title">{{ i }}</h3>
-                    <a href="/viewcourses/{{i}}" class="inline-btn">view course</a>
+            <div class="box">
+                <div class="c-banner">
+                    <h3 class="title">{{i}}</h3>
                 </div>
+                <div class="tutor">
+                    <div class="info">
+                        <h3>Teacher name</h3>
+                        <span>IT303</span>
+                    </div>
+                    <img src="{%static 'general/images/pic-2.jpg'%}" alt="">
+                </div>
+                <a href="/viewcourses/{{i}}" class="inline-btn">View Course</a>
+            </div>
             {% endfor %}
-
         </div>
     </section>
     {% else %}

@@ -159,6 +159,7 @@ def createquiz(request):
                                 question=question
                             )
                     quiz.totalpoints = total_points
+                    quiz.totalquestions = len(questions)
                     quiz.save()
                 except Exception as e:
                     print(f'Error when creating questions and choices: {e}')
@@ -171,11 +172,14 @@ def createquiz(request):
 def viewquiz(request, course_name):
     course = Course.objects.get(title=course_name)
     quizzes = Quiz.objects.filter(course=course)
-    submission=QuizSubmission.objects.filter(user=request.user)
     return render(request, 'assessment/viewquiz.html', {'quizzes': quizzes, 'course': course})
 
-def quiz(request, quiz_id):
+def quiz(request, quiz_id, check=0):
     quiz = get_object_or_404(Quiz, id=quiz_id)
+    if not check==1 and QuizSubmission.objects.filter(user=request.user, quiz=quiz).exists():
+        print("1")
+        return showresult(request,quiz_id)
+    print("0")
     questions = MCQQuestion.objects.filter(quiz=quiz).order_by('?')
     choices = {question: MCQChoice.objects.filter(question=question).order_by('?') for question in questions}
     return render(request, 'assessment/quiz.html', {'quiz': quiz, 'questions': questions, 'choices': choices})
@@ -189,12 +193,26 @@ def submitquiz(request, quiz_id):
     }
     if request.method == 'POST':
         score = 0
+        correct_answers=0
         questions = MCQQuestion.objects.filter(quiz=quiz)
         for question in questions:
             choice_id = request.POST.get('choice_for_question_{}'.format(question.id))
             choice = MCQChoice.objects.filter(id=choice_id).first()
             if choice and choice.is_correct:
                 score += difficulty_points.get(question.level, 0)
-        QuizSubmission.objects.create(user=request.user, quiz=quiz, score=score)
+                correct_answers+=1
+        QuizSubmission.objects.create(user=request.user, quiz=quiz, score=score, correctlyanswered=correct_answers)
         return redirect('viewquiz', course_name=quiz.course.title)
     return render(request, 'assessment/quiz.html', {'quiz': quiz})
+
+def getquizscore(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    user = request.user
+    score = QuizSubmission.objects.get(user=user, quiz=quiz).score
+    return score
+
+def showresult(request,quiz_id):
+    quiz=get_object_or_404(Quiz, id=quiz_id)
+    score=getquizscore(request,quiz_id)
+    submissions=QuizSubmission.objects.filter(user=request.user, quiz=quiz).first()
+    return render(request, 'assessment/result.html',{'quiz':quiz,'score':score, 'submissions':submissions})

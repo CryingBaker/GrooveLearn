@@ -13,8 +13,10 @@ urlpatterns = [
     path("scoreassignment/<int:submission_id>/", views.scoreassignment, name="scoreassignment"),    
     path('createquiz', views.createquiz, name='createquiz'),
     path('viewquiz/<str:course_name>/', views.viewquiz, name='viewquiz'),
-    path('quiz/<int:quiz_id>/', views.quiz, name='quiz'),
+    path('quiz/<int:quiz_id>/<int:check>/', views.quiz, name='quiz'),
     path('submitquiz/<int:quiz_id>/', views.submitquiz, name='submitquiz'),
+    path('getquizscore', views.getquizscore, name='getquizscore'),
+    path('showresult/<int:quiz_id>', views.showresult, name='showresult'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

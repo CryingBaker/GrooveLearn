@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.hashers import check_password
+from django.core.files.storage import default_storage
 
 # Create your views here.
 def home(request):
@@ -63,6 +64,7 @@ def updateprofile(request):
         oldpassword = request.POST['old_pass']
         newpassword = request.POST.get('pass')
         newpassword2 = request.POST['c_pass']
+        profile_picture = request.FILES.get('profile_picture')
         if newusername:
             request.user.username = newusername
         if newemail:
@@ -70,13 +72,16 @@ def updateprofile(request):
                 messages.error(request, 'Email is already taken')
             else:
                 request.user.email = newemail
-
+        if profile_picture:
+            request.user.userprofile.profile_picture.delete(save=False)
+            request.user.userprofile.profile_picture = default_storage.save(profile_picture.name, profile_picture)
         if check_password(oldpassword, request.user.password) and newpassword is not None and newpassword2 is not None:
             if newpassword == newpassword2:
                 request.user.set_password(newpassword)
             else:
                 messages.error(request, 'Passwords do not match')
         request.user.save()
+        request.user.userprofile.save()
         update_session_auth_hash(request, request.user)
         messages.success(request, 'Profile updated successfully')
         return redirect('profile')

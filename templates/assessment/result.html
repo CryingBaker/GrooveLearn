@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Chilanka&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="{%static 'general/css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'general/css/result.css'%}">
 
 </head>
 
@@ -78,40 +79,20 @@
         </nav>
 
     </div>
-
-    <section class="home-grid">
-
-        <h1 class="heading">quick options</h1>
-
+    <section class="result">
         <div class="box-container">
-            <div class="box">
-                <h3 class="title">become a Ranker</h3>
-                <p class="tutor">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis, nam?</p>
-                <a href="/ranking" class="inline-btn">get started</a>
-            </div>
-
-        </div>
-
-    </section>
-    <section class="home-grid">
-        <h1 class="heading">Notice Board</h1>
-        {% if user.is_authenticated %}
-        <div class="box-container">
-            <div class="sticky-notes">
-                <h3 class="title">Project progress presentation II is scheduled nest week-Wednesday - 28th February,
-                    2024.</h3>
-            </div>
-            <div class="sticky-notes">
-                <h3 class="title">Dear students,
-                    please come with index page and rubrics page for MPMC,and submit to me tommorrow.</h3>
-            </div>
-            <div class="sticky-notes">
-                <h3 class="title">Please ensure the assignment is submitted by March 10, 2024. </h3>
+            <div class="scorecard">
+                <div class="r-title">
+                    <h1><img width="35" height="35" src="https://img.icons8.com/cotton/64/checked--v3.png"
+                            alt="checked--v3" /> Scorecard</h1>
+                </div>
+                <div class="score">
+                    <h1>Score: {{score}}/{{quiz.totalpoints}}</h1>
+                    <h3>Correct Questions: {{submissions.correctlyanswered}} /{{quiz.totalquestions}}</h3>
+                </div>
+                <a href="/quiz/{{quiz.id}}/1/" class="inline-btn">View Quiz</a>
             </div>
         </div>
-        {% else %}
-        <h2>Login to view this content</h2>
-        {% endif %}
     </section>
     <footer class="footer">
 

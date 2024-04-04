@@ -1,0 +1,39 @@
+.scorecard{
+    width: 400px;
+    height: auto;
+    background-color: white;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 20px;
+    margin-top: 20px;
+}
+.result .box-container{
+    display: flex;
+    font-size: 20px;
+    padding: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+}
+.r-title{
+    width: 100%;
+    height: auto;
+    background-color: white;
+    border-radius: 10px;
+    font-size: 15px;
+}
+.r-title h1{
+    font-size: 30px;
+    margin-bottom: 7px;
+}
+.score{
+    width: 100%;
+    height: 200px;
+    background-color: rgb(253, 224, 255);
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 20px;
+    margin-bottom: 10px;
+}

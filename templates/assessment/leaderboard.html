@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Chilanka&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="{%static 'general/css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'general/css/leaderboard.css'%}">
 
 </head>
 
@@ -80,113 +81,7 @@
     </div>
 
     {% if user.is_authenticated %}
-    <section class="teachers">
 
-        <h1 class="heading">Rankers List</h1>
-
-        <form action="" method="post" class="search-tutor">
-            <input type="text" name="search_box" placeholder="search student..." required maxlength="100">
-            <button type="submit" class="fas fa-search" name="search_tutor"></button>
-        </form>
-
-        <div class="box-container">
-
-            <div class="box offer">
-                <h3>become a Top Ranker</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, itaque ipsam fuga ex et aliquam.
-                </p>
-                <a href="register.html" class="inline-btn">get started</a>
-            </div>
-
-            <div class="box">
-                <div class="tutor">
-                    <img src="images/pic-2.jpg" alt="">
-                    <div>
-                        <h3>Student 1</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>Rank : <span>1</span></p>
-                <p>total solved : <span>18</span></p>
-                <p>total points : <span>1208</span></p>
-                <a href="teacher_profile.html" class="inline-btn">view profile</a>
-            </div>
-
-            <div class="box">
-                <div class="tutor">
-                    <img src="images/pic-3.jpg" alt="">
-                    <div>
-                        <h3>Student 2</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>Rank : <span>2</span></p>
-                <p>total solved : <span>18</span></p>
-                <p>total points : <span>1001</span></p>
-                <a href="teacher_profile.html" class="inline-btn">view profile</a>
-            </div>
-
-
-
-            <div class="box">
-                <div class="tutor">
-                    <img src="images/pic-5.jpg" alt="">
-                    <div>
-                        <h3>Student 3</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>Rank : <span>3</span></p>
-                <p>total solved : <span>18</span></p>
-                <p>total points : <span>900</span></p>
-                <a href="teacher_profile.html" class="inline-btn">view profile</a>
-            </div>
-
-            <div class="box">
-                <div class="tutor">
-                    <img src="images/pic-6.jpg" alt="">
-                    <div>
-                        <h3>Student 4</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>Rank : <span>4</span></p>
-                <p>total solved : <span>18</span></p>
-                <p>total points : <span>800</span></p>
-                <a href="teacher_profile.html" class="inline-btn">view profile</a>
-            </div>
-
-            <div class="box">
-                <div class="tutor">
-                    <img src="images/pic-7.jpg" alt="">
-                    <div>
-                        <h3>Student 5</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>Rank : <span>5</span></p>
-                <p>total solved : <span>18</span></p>
-                <p>total points : <span>700</span></p>
-                <a href="teacher_profile.html" class="inline-btn">view profile</a>
-            </div>
-
-            <div class="box">
-                <div class="tutor">
-                    <img src="images/pic-8.jpg" alt="">
-                    <div>
-                        <h3>Student 6</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>Rank : <span>6</span></p>
-                <p>total solved : <span>18</span></p>
-                <p>total points : <span>600</span></p>
-                <a href="teacher_profile.html" class="inline-btn">view profile</a>
-            </div>
-
-        </div>
-
-    </section>
     {% else %}
     <section class="courses">
 
@@ -206,3 +101,163 @@
 </body>
 
 </html>
+<section class="leaderboard">
+    <h1 class="heading">Leaderboard</h1>
+    <div class="box-container">
+        <div id="legend">
+            <div class="sr">
+                <h1>Sr.no</h1>
+            </div>
+            <div class="s-name">
+                <h1>Name</h1>
+            </div>
+            <div class="batch">
+                <h1>Batch</h1>
+            </div>
+            <div class="roll">
+                <h1>Roll no</h1>
+            </div>
+            <div class="badge">
+                <h1>Badges</h1>
+            </div>
+            <div class="pts">
+                <h1>Score <img width="15" height="15" src="https://img.icons8.com/emoji/48/star-emoji.png"
+                        alt="star-emoji" /></h1>
+            </div>
+        </div>
+        <div class="legend">
+            <div class="sr">
+                <h1>1</h1>
+            </div>
+            <div class="s-name">
+                <h1>Saurabh Kumar</h1>
+            </div>
+            <div class="batch">
+                <h1>S2</h1>
+            </div>
+            <div class="roll">
+                <h1>24</h1>
+            </div>
+            <div class="badge">
+                <img width="30" height="30" src="https://img.icons8.com/emoji/48/1st-place-medal-emoji.png"
+                    alt="1st-place-medal-emoji" />
+                <img width="30" height="30" src="https://img.icons8.com/emoji/48/1st-place-medal-emoji.png"
+                    alt="1st-place-medal-emoji" />
+                <img width="30" height="30" src="https://img.icons8.com/emoji/48/1st-place-medal-emoji.png"
+                    alt="1st-place-medal-emoji" />
+            </div>
+            <div class="pts">
+                <h1>5000</h1>
+            </div>
+        </div>
+        <div class="legend">
+            <div class="sr">
+                <h1>2</h1>
+            </div>
+            <div class="s-name">
+                <h1>Jai Parker</h1>
+            </div>
+            <div class="batch">
+                <h1>S2</h1>
+            </div>
+            <div class="roll">
+                <h1>41</h1>
+            </div>
+            <div class="badge">
+                <img width="30" height="30" src="https://img.icons8.com/emoji/48/2nd-place-medal-emoji.png"
+                    alt="1st-place-medal-emoji" />
+                <img width="30" height="30" src="https://img.icons8.com/emoji/48/3rd-place-medal-emoji.png"
+                    alt="1st-place-medal-emoji" />
+                <img width="30" height="30" src="https://img.icons8.com/emoji/48/2nd-place-medal-emoji.png"
+                    alt="1st-place-medal-emoji" />
+            </div>
+            <div class="pts">
+                <h1>4500</h1>
+            </div>
+        </div>
+        <div class="legend">
+            <div class="sr">
+                <h1>3</h1>
+            </div>
+            <div class="s-name">
+                <h1>Atharv Wadadekar</h1>
+            </div>
+            <div class="batch">
+                <h1>S3</h1>
+            </div>
+            <div class="roll">
+                <h1>69</h1>
+            </div>
+            <div class="badge">
+                <img width="30" height="30" src="https://img.icons8.com/emoji/48/3rd-place-medal-emoji.png"
+                    alt="1st-place-medal-emoji" />
+                <img width="30" height="30" src="https://img.icons8.com/emoji/48/2nd-place-medal-emoji.png"
+                    alt="1st-place-medal-emoji" />
+            </div>
+            <div class="pts">
+                <h1>4100</h1>
+            </div>
+        </div>
+        <div class="legend">
+            <div class="sr">
+                <h1>4</h1>
+            </div>
+            <div class="s-name">
+                <h1>Megh Shah</h1>
+            </div>
+            <div class="batch">
+                <h1>S3</h1>
+            </div>
+            <div class="roll">
+                <h1>54</h1>
+            </div>
+            <div class="badge">
+                <img width="30" height="30" src="https://img.icons8.com/emoji/48/3rd-place-medal-emoji.png"
+                    alt="1st-place-medal-emoji" />
+            </div>
+            <div class="pts">
+                <h1>4000</h1>
+            </div>
+        </div>
+        <div class="legend">
+            <div class="sr">
+                <h1>5</h1>
+            </div>
+            <div class="s-name">
+                <h1>Siddhesh Rane</h1>
+            </div>
+            <div class="batch">
+                <h1>S3</h1>
+            </div>
+            <div class="roll">
+                <h1>48</h1>
+            </div>
+            <div class="badge">
+            </div>
+            <div class="pts">
+                <h1>3700</h1>
+            </div>
+        </div>
+        <div class="legend">
+            <div class="sr">
+                <h1>6</h1>
+            </div>
+            <div class="s-name">
+                <h1>Suyash Saraf</h1>
+            </div>
+            <div class="batch">
+                <h1>S3</h1>
+            </div>
+            <div class="roll">
+                <h1>52</h1>
+            </div>
+            <div class="badge">
+            </div>
+            <div class="pts">
+                <h1>3600</h1>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</section>

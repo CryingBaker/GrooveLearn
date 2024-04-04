@@ -23,7 +23,8 @@ class Quiz(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     course = models.ForeignKey('courses.Course', on_delete=models.CASCADE)
-    pointsperquestion = models.IntegerField(default=1)
+    totalpoints=models.IntegerField(default=0)
+    type=models.CharField(max_length=100, default='understanding')
 
     def __str__(self):
         return self.title
@@ -31,6 +32,7 @@ class Quiz(models.Model):
 class MCQQuestion(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
     question_text = models.CharField(max_length=200)
+    level=models.CharField(max_length=100, default='easy')
 
     def __str__(self):
         return self.question_text

@@ -61,7 +61,7 @@ def listassignments(request, course_name):
     else:
         courses = Course.objects.all()
     course = Course.objects.get(title=course_name)
-    assignments = Assignment.objects.filter(course=course)
+    assignments = Assignment.objects.filter(course=course).order_by('-id')
     return assignments
 
 def viewassignment(request, assignment_id):
@@ -118,38 +118,50 @@ def createquiz(request):
         description = request.POST.get('description')
         course_id = request.POST.get('course')
         course = Course.objects.get(id=course_id)
-        pointsperquestion = request.POST.get('points')
+        typeofquiz=request.POST.get('quiz_type')
+        total_points = 0
 
         quiz = Quiz.objects.create(
             title=title,
             description=description,
             course=course,
-            pointsperquestion=pointsperquestion,
+            type=typeofquiz,
         )
 
+        difficulty_points = {
+            'easy': 1,
+            'medium': 3,
+            'hard': 5
+        }
+
         questions_data = request.POST.get('questions')
-        print(f'Raw questions_data: {questions_data}')
         if questions_data is not None:
             questions_data = json.loads(questions_data)
-            
-        questions_data = request.POST.get('questions')
-        if questions_data is not None:
-            questions_data = json.loads(questions_data)
-            if isinstance(questions_data, list):
-                for question_data in questions_data:
-                    question_text = question_data['question_text']
-                    question = MCQQuestion.objects.create(
-                        question_text=question_text,
-                        quiz=quiz
-                    )
-                    for choice_data in question_data['choices']:
-                        choice_text = choice_data['choice_text']
-                        is_correct = choice_data['is_correct']
-                        MCQChoice.objects.create(
-                            choice_text=choice_text,
-                            is_correct=is_correct,
-                            question=question
+            questions = questions_data.get('questions')
+            print(f'Parsed questions_data: {questions}') 
+            if isinstance(questions, list):
+                try:
+                    for question_data in questions:
+                        question_text = question_data['question_text']
+                        difficulty = question_data['difficulty']
+                        question = MCQQuestion.objects.create(
+                            question_text=question_text,
+                            quiz=quiz,
+                            level=difficulty
                         )
+                        total_points += difficulty_points.get(difficulty, 0)
+                        for choice_data in question_data['choices']:
+                            choice_text = choice_data['choice_text']
+                            is_correct = choice_data['is_correct']
+                            MCQChoice.objects.create(
+                                choice_text=choice_text,
+                                is_correct=is_correct,
+                                question=question
+                            )
+                    quiz.totalpoints = total_points
+                    quiz.save()
+                except Exception as e:
+                    print(f'Error when creating questions and choices: {e}')
             else:
                 print(f'Unexpected questions_data: {questions_data}')
                 return redirect('/courses')
@@ -159,10 +171,30 @@ def createquiz(request):
 def viewquiz(request, course_name):
     course = Course.objects.get(title=course_name)
     quizzes = Quiz.objects.filter(course=course)
+    submission=QuizSubmission.objects.filter(user=request.user)
     return render(request, 'assessment/viewquiz.html', {'quizzes': quizzes, 'course': course})
 
 def quiz(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     questions = MCQQuestion.objects.filter(quiz=quiz).order_by('?')
     choices = {question: MCQChoice.objects.filter(question=question).order_by('?') for question in questions}
-    return render(request, 'quiz/quiz.html', {'quiz': quiz, 'questions': questions, 'choices': choices})
+    return render(request, 'assessment/quiz.html', {'quiz': quiz, 'questions': questions, 'choices': choices})
+
+def submitquiz(request, quiz_id):
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+    difficulty_points = {
+        'easy': 1,
+        'medium': 3,
+        'hard': 5
+    }
+    if request.method == 'POST':
+        score = 0
+        questions = MCQQuestion.objects.filter(quiz=quiz)
+        for question in questions:
+            choice_id = request.POST.get('choice_for_question_{}'.format(question.id))
+            choice = MCQChoice.objects.filter(id=choice_id).first()
+            if choice and choice.is_correct:
+                score += difficulty_points.get(question.level, 0)
+        QuizSubmission.objects.create(user=request.user, quiz=quiz, score=score)
+        return redirect('viewquiz', course_name=quiz.course.title)
+    return render(request, 'assessment/quiz.html', {'quiz': quiz})

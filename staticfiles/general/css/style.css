@@ -560,7 +560,12 @@ section {
    justify-content: center;
    align-items: flex-start;
    margin-top: 10px;
+}
 
+.quiz .box-container {
+   font-size: 20px;
+   padding: 20px;
+   width: 100%;
 }
 
 .courses .box-container .box {
@@ -1667,6 +1672,17 @@ tbody td.active {
    font-size: 20px;
 }
 
+.createpostgreen {
+   width: 135px;
+   height: 45px;
+   padding: 10px;
+   border-radius: 50px;
+   background-color: #4CAF50;
+   color: white;
+   ;
+   font-size: 20px;
+}
+
 .post {
    height: 75px;
    width: 100%;
@@ -1733,6 +1749,13 @@ tbody td.active {
    display: flex;
    align-items: center;
    justify-content: space-between;
+   margin-bottom: 15px;
+}
+
+.inlineleft {
+   display: flex;
+   align-items: center;
+   justify-content: flex-start;
    margin-bottom: 15px;
 }
 

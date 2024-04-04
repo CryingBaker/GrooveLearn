@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Chilanka&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="{%static 'general/css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'general/css/quiz.css'%}">
 
 </head>
 
@@ -79,41 +81,51 @@
 
     </div>
 
-    <section class="home-grid">
-
-        <h1 class="heading">quick options</h1>
-
-        <div class="box-container">
-            <div class="box">
-                <h3 class="title">become a Ranker</h3>
-                <p class="tutor">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis, nam?</p>
-                <a href="/ranking" class="inline-btn">get started</a>
-            </div>
-
-        </div>
-
-    </section>
     {% if user.is_authenticated %}
-    <section class="quiz">
-        <h1 class="heading">{{ quiz }}</h1>
-
-        <div class="progress">
-            <div class="progress-bar" style="width: 50%;">50%</div>
-        </div>
-
-        <div class="quiz-container">
-            <div class="question">
-                <h2>Question 1</h2>
-                <input type="radio" name="question1" value="a"> Choice A<br>
-                <input type="radio" name="question1" value="b"> Choice B<br>
-                <input type="radio" name="question1" value="c"> Choice C<br>
-                <input type="radio" name="question1" value="d"> Choice D<br>
+    <form action="/submitquiz/{{quiz.id}}/" method="POST">
+        {% csrf_token %}
+        <section class="quiz">
+            <div class="box-container">
+                <div class="q-title">
+                    <h1>{{quiz.title}}</h1>
+                    <p>{{quiz.description}}</p>
+                    <div class="level">
+                        <h3>Type: {{quiz.type}}</h3>
+                        <h3><img width="20" height="20" src="https://img.icons8.com/emoji/48/star-emoji.png"
+                                alt="star-emoji" /> +{{quiz.totalpoints}}</h3>
+                    </div>
+                </div>
+                {% for question in questions %}
+                <div class="ques">
+                    <h1>Q.{{ forloop.counter }} {{ question.question_text }}</h1>
+                    <div class="level">
+                        <h3>Level: {{question.level}}</h3>
+                        <h3><img width="20" height="20" src="https://img.icons8.com/emoji/48/star-emoji.png"
+                                alt="star-emoji" /> +
+                            {% if question.level == "easy" %}
+                            1
+                            {% elif question.level == "medium" %}
+                            3
+                            {% elif question.level == "hard" %}
+                            5
+                            {% endif %}
+                        </h3>
+                    </div>
+                    <div class="opt">
+                        {% for choice in choices|get_item:question %}
+                        <label class="container">
+                            <input type="radio" name="choice_for_question_{{ question.id }}" value="{{ choice.id }}">
+                            {{choice.choice_text }}
+                            <span class="checkmark"></span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                <button class="inline-btn">Submit</button>
             </div>
-            <!-- Add more questions as needed -->
-        </div>
-
-        <button class="submit-btn">Submit Quiz</button>
-    </section>
+        </section>
+    </form>
     {% else %}
     <section class="quiz">
         <h1 class="heading">Login to view this content</h1>

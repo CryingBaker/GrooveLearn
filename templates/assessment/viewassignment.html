@@ -92,12 +92,17 @@
                 {% if assignment.file %}
                 <h6><a href="{{ assignment.file.url }}">Download File</a></h6>
                 {% endif %}
+                <div class="createpostgreen">
+                    <a href="/gradeassignments/{{assignment.id}}/">
+                        <h5>+ Submissions</h5>
+                    </a>
+                </div>
             </div>
             <div class="right">
                 <h2><label for="file">Your Work</label></h2>
                 <div class="inline">
                     <div class="due">
-                        Due: {{assignment.due_date}}
+                        Due: {{assignment.due_date|date:"d/m/Y" }}
                     </div>
                     {% if score %}
                     <h3><img width="20" height="20" src="https://img.icons8.com/emoji/48/star-emoji.png"

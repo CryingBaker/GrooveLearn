@@ -92,31 +92,23 @@
             </a>
         </div>
         {%else%}
-        <div class="createpost">
-            <a href="/createassignment">
-                <h5>+ Create Assignment</h5>
-            </a>
+        <div class="inlineleft">
+            <div class="createpost">
+                <a href="/createassignment">
+                    <h5>+ Create Post</h5>
+                </a>
+            </div>
+            <div class="createpost">
+                <a href="/createquiz">
+                    <h5>+ Create Quiz</h5>
+                </a>
+            </div>
         </div>
-        <div class="createpost">
-            <a href="/createquiz">
-                <h5>+ Create Quiz</h5>
-            </a>
-        </div>
-        <div class="createpost">
-            <a href="">
-                <h5>+ Edit Assignment</h5>
-            </a>
-        </div>
-        <div class="createpost">
+        <!-- <div class="createpost">
             <a href="">
                 <h5>+ Edit Quiz</h5>
             </a>
-        </div>
-        <div class="createpost">
-            <a href="/viewsubmissions">
-                <h5>+ View Submissions</h5>
-            </a>
-        </div>
+        </div> -->
         </div>
         {%endif%}
         <h1>Posts</h1>
@@ -129,7 +121,7 @@
                 </a>
             </div>
             <div class="due">
-                Due: {{ assignment.due_date }}
+                Due: {{ assignment.due_date|date:"d/m/Y" }}
             </div>
         </div>
         {% endfor %}

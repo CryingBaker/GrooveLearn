@@ -95,10 +95,14 @@
                     <option value="{{course.id}}">{{course.title}}</option>
                     {% endfor %}
                 </select>
-                <p>Points per question:</p>
-                <input type="number" name="points" placeholder="Enter points per question" required class="box">
+                <p>Quiz Type <span>*</span></p>
+                <select name="quiz_type" required class="box">
+                    <option value="" disabled selected>Select Quiz Type</option>
+                    <option value="memorization">Memorization</option>
+                    <option value="understanding">Understanding</option>
+                    <option value="application">Application</option>
+                </select>
                 <div id="questions">
-                    <!-- Questions will be added here -->
                 </div>
                 <button type="button" id="add-question" class="btn">Add Question</button>
                 <input type="hidden" id="questions-data" name="questions" value="0">
@@ -118,27 +122,36 @@
             var questions = document.getElementById('questions');
             var question = document.createElement('div');
             question.innerHTML = `
-        <p>Question Text <span>*</span></p>
-        <input type="text" name="question_text" placeholder="Enter question text" required maxlength="200" class="box">
-        <div class="choices">
-            <p>Choice Text <span>*</span></p>
-            <input type="text" name="choice_text" placeholder="Enter choice text" required maxlength="200" class="box">
-            <p>Is Correct <span>*</span></p>
-            <input type="checkbox" name="is_correct" class="box">
-        </div>
-        <button type="button" class="add-choice btn">Add Choice</button>
-    `;
+            <p>Question Text <span>*</span></p>
+            <input type="text" name="question_text" placeholder="Enter question text" required maxlength="200" class="box">
+            <p>Difficulty <span>*</span></p>
+            <select name="difficulty" required class="box">
+                <option value="" disabled selected>Select Difficulty</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+            <div class="choices">
+                <p>Choice Text <span>*</span></p>
+                <input type="text" name="choice_text" placeholder="Enter choice text" required maxlength="200" class="box">
+                <p>Is Correct <span>*</span></p>
+                <input type="checkbox" name="is_correct" class="box">
+            </div>
+            <button type="button" class="add-choice btn">Add Choice</button>
+        `;
+
             question.querySelector('.add-choice').addEventListener('click', function () {
                 var choice = document.createElement('div');
                 choice.className = 'choices';
                 choice.innerHTML = `
-            <p>Choice Text <span>*</span></p>
-            <input type="text" name="choice_text" placeholder="Enter choice text" required maxlength="200" class="box">
-            <p>Is Correct <span>*</span></p>
-            <input type="checkbox" name="is_correct" class="box">
-        `;
+                <p>Choice Text <span>*</span></p>
+                <input type="text" name="choice_text" placeholder="Enter choice text" required maxlength="200" class="box">
+                <p>Is Correct <span>*</span></p>
+                <input type="checkbox" name="is_correct" class="box">
+            `;
                 question.insertBefore(choice, this);
             });
+
             questions.appendChild(question);
         });
 
@@ -147,11 +160,14 @@
             var onSubmit = function (event) {
                 event.preventDefault();
 
+                var quizType = document.querySelector('select[name="quiz_type"]').value;
+
                 var questions = [];
                 var questionElements = document.querySelectorAll('#questions > div');
                 for (var i = 0; i < questionElements.length; i++) {
                     var questionElement = questionElements[i];
                     var questionText = questionElement.querySelector('input[name="question_text"]').value;
+                    var difficulty = questionElement.querySelector('select[name="difficulty"]').value;
                     var choices = [];
                     var choiceElements = questionElement.querySelectorAll('.choices');
                     for (var j = 0; j < choiceElements.length; j++) {
@@ -160,10 +176,10 @@
                         var isCorrect = choiceElement.querySelector('input[name="is_correct"]').checked;
                         choices.push({ choice_text: choiceText, is_correct: isCorrect });
                     }
-                    questions.push({ question_text: questionText, choices: choices });
+                    questions.push({ question_text: questionText, difficulty: difficulty, choices: choices });
                 }
 
-                document.getElementById('questions-data').value = JSON.stringify(questions);
+                document.getElementById('questions-data').value = JSON.stringify({ quiz_type: quizType, questions: questions });
 
                 quizForm.removeEventListener('submit', onSubmit);  // Remove the event listener
                 event.target.submit();

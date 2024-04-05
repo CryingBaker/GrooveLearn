@@ -92,22 +92,26 @@
                 {% if assignment.file %}
                 <h6><a href="{{ assignment.file.url }}">Download File</a></h6>
                 {% endif %}
+                {% if is_teacher_of_course%}
                 <a href="/gradeassignments/{{assignment.id}}/">
                     <div class="createpostgreen">
-                        <h5>+ Submissions</h5>
+                        <h5>Submissions</h5>
                     </div>
                 </a>
+                {% endif %}
             </div>
+            {%if not is_teacher_of_course%}
             <div class="right">
                 <h2><label for="file">Your Work</label></h2>
                 <div class="inline">
                     <div class="due">
                         Due: {{assignment.due_date|date:"d/m/Y" }}
                     </div>
-                    {% if score %}
                     <h3><img width="20" height="20" src="https://img.icons8.com/emoji/48/star-emoji.png"
                             alt="star-emoji" />
-                        +{{ score }}</h3>
+                        {% if score %}
+                        {{ score }}/25
+                        {%else%}0/25</h3>
                     {% endif %}
                 </div>
                 {% if submission.file %}
@@ -127,13 +131,14 @@
                 <button disabled>Turn In</button>
                 {% endif %}
             </div>
+            {%endif%}
         </form>
     </div>
-    <!-- <footer class="footer">
+    <footer class="footer">
 
         &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!
 
-    </footer> -->
+    </footer>
 
     <script src="{%static 'general/js/script.js'%}"></script>
 

@@ -67,12 +67,17 @@ def listassignments(request, course_name):
 def viewassignment(request, assignment_id):
     assignment = Assignment.objects.get(id=assignment_id)
     try:
+        course=assignment.course
+        is_teacher_of_course = False
+        user_role = get_user_role(request.user)
+        if user_role == 'Teacher' and course in request.user.teacher.courses.all():
+            is_teacher_of_course = True
         submission = AssignmentSubmission.objects.get(assignment=assignment_id, user=request.user)
         score = submission.score
     except AssignmentSubmission.DoesNotExist:
         score = None
         submission = None
-    return render(request, 'assessment/viewassignment.html', {'assignment': assignment,'score': score,'submission': submission})
+    return render(request, 'assessment/viewassignment.html', {'assignment': assignment,'score': score,'submission': submission, 'course': course, 'is_teacher_of_course': is_teacher_of_course})
 
 def submitassignment(request, assignment_id):
     assignment = get_object_or_404(Assignment, id=assignment_id)

@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Chilanka&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="{%static 'general/css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'general/css/gradeassignment.css'%}">
 
 </head>
 
@@ -79,43 +80,61 @@
 
     </div>
 
-    <section class="home-grid">
-        <h1>Assignment Submissions</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>User</th>
-                    <th>File</th>
-                    <th>Grade</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for submission in submissions %}
-                <tr>
-                    <td>{{ submission.user.username }}</td>
-                    <td><a href="{{ submission.file.url }}">Download</a></td>
-                    <td>{{ submission.score }}</td>
-                    <td>
+    <section class="leaderboard">
+        <h1 class="heading">Assignment Submissions</h1>
+        <div class="box-container">
+            <div id="legend">
+                <div class="sr">
+                    <h1>Sr.no</h1>
+                </div>
+                <div class="s-name">
+                    <h1>Name</h1>
+                </div>
+                <div class="file">
+                    <h1>Submitted File</h1>
+                </div>
+                <div class="pts">
+                    <h1>Score <img width="15" height="15" src="https://img.icons8.com/emoji/48/star-emoji.png"
+                            alt="star-emoji" /></h1>
+                </div>
+                <div class="cg">
+                    <h1>Change Score</h1>
+                </div>
+            </div>
+            {%for submission in submissions%}
+            <div class="legend">
+                <div class="sr">
+                    <h1>{{forloop.counter}}</h1>
+                </div>
+                <div class="s-name">
+                    <h1>{{submission.user.username}}</h1>
+                </div>
+                <div class="file">
+                    <h1><a href="{{ submission.file.url }}">{{submission.file}}</a></h1>
+                </div>
+                <div class="pts">
+                    <h1>{{submission.score}}</h1>
+                </div>
+                <div class="cg">
+                    <h1>
                         <form action="/scoreassignment/{{submission.id}}/" method="POST">
                             {% csrf_token %}
                             <input type="number" name="grade" min="0" max="100" value="{{ submission.score }}">
                             <input type="submit" value="Update Grade">
                         </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
+                    </h1>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
 
-    <footer class="footer">
+        <footer class="footer">
 
-        &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!
+            &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!
 
-    </footer>
+        </footer>
 
-    <script src="{%static 'general/js/script.js'%}"></script>
+        <script src="{%static 'general/js/script.js'%}"></script>
 
 </body>
 

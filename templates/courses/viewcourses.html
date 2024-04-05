@@ -86,23 +86,26 @@
             </div>
         </div>
         {% if is_teacher_of_course == False%}
-        <div class="createpost">
-            <a href="/viewquiz/{{course}}/">
+        <a href="/viewquiz/{{course}}/">
+            <div class="createpost">
                 <h5>+ Assessment</h5>
-            </a>
-        </div>
+
+            </div>
+        </a>
         {%else%}
         <div class="inlineleft">
-            <div class="createpost">
-                <a href="/createassignment">
+            <a href="/createassignment">
+                <div class="createpost">
                     <h5>+ Create Post</h5>
-                </a>
-            </div>
-            <div class="createpost">
-                <a href="/createquiz">
+
+                </div>
+            </a>
+            <a href="/createquiz">
+                <div class="createpost">
                     <h5>+ Create Quiz</h5>
-                </a>
-            </div>
+
+                </div>
+            </a>
         </div>
         <!-- <div class="createpost">
             <a href="">
@@ -113,17 +116,18 @@
         {%endif%}
         <h1>Posts</h1>
         {% for assignment in assignments %}
-        <div class="post">
-            <div class="explogo">
-                <img width="30" height="30" src="https://img.icons8.com/ios/50/course-assign.png" alt="course-assign" />
-                <a href="/viewassignment/{{assignment.id}}/">
+        <a href="/viewassignment/{{assignment.id}}/">
+            <div class="post">
+                <div class="explogo">
+                    <img width="30" height="30" src="https://img.icons8.com/ios/50/course-assign.png"
+                        alt="course-assign" />
                     <h5>{{ assignment.title }}</h5>
-                </a>
+                </div>
+                <div class="due">
+                    Due: {{ assignment.due_date|date:"d/m/Y" }}
+                </div>
             </div>
-            <div class="due">
-                Due: {{ assignment.due_date|date:"d/m/Y" }}
-            </div>
-        </div>
+        </a>
         {% endfor %}
     </section>
     <footer class="footer">

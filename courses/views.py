@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from authentication.models import Teacher
 from .models import Course
 from assessment.views import listassignments
 
@@ -16,8 +18,18 @@ def courses(request):
         all_courses = request.user.teacher.courses.all()
     else:
         all_courses = request.user.student.courses.all()
-    # teachername = all_courses.teacher_name()
-    return render(request, 'courses/courses.html',{'courses':all_courses})
+
+    teacher_names = {}
+    for course in all_courses:
+        teachers = Teacher.objects.filter(courses=course)
+        print(f"Teachers for course {course.title}: {teachers}")  # Debug print statement
+        teacher = teachers.first()
+        if teacher:
+            teacher_names[course.title] = teacher.user.username
+
+    print(f"Teacher names: {teacher_names}")  # Debug print statement
+
+    return render(request, 'courses/courses.html', {'courses': all_courses, 'teacher_names': teacher_names})
 
 def viewcourses(request, course_name):  
     assignments = listassignments(request, course_name)
@@ -28,4 +40,3 @@ def viewcourses(request, course_name):
         is_teacher_of_course = True
     return render(request, 'courses/viewcourses.html',{'course':course, 'is_teacher_of_course':is_teacher_of_course, 'assignments':assignments})
 
-# create_assignment(request, course_name):

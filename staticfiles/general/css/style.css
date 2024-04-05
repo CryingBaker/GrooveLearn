@@ -1668,7 +1668,6 @@ tbody td.active {
    border-radius: 50px;
    background-color: white;
    color: var(--main-color);
-   ;
    font-size: 20px;
 }
 
@@ -1679,8 +1678,8 @@ tbody td.active {
    border-radius: 50px;
    background-color: #4CAF50;
    color: white;
-   ;
    font-size: 20px;
+   text-decoration: none;
 }
 
 .post {

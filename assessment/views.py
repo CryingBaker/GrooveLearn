@@ -202,7 +202,7 @@ def submitquiz(request, quiz_id):
                 score += difficulty_points.get(question.level, 0)
                 correct_answers+=1
         QuizSubmission.objects.create(user=request.user, quiz=quiz, score=score, correctlyanswered=correct_answers)
-        return redirect('viewquiz', course_name=quiz.course.title)
+        return showresult(request,quiz_id)
     return render(request, 'assessment/quiz.html', {'quiz': quiz})
 
 def getquizscore(request, quiz_id):

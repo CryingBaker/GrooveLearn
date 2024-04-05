@@ -92,11 +92,11 @@
                 {% if assignment.file %}
                 <h6><a href="{{ assignment.file.url }}">Download File</a></h6>
                 {% endif %}
-                <div class="createpostgreen">
-                    <a href="/gradeassignments/{{assignment.id}}/">
+                <a href="/gradeassignments/{{assignment.id}}/">
+                    <div class="createpostgreen">
                         <h5>+ Submissions</h5>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
             <div class="right">
                 <h2><label for="file">Your Work</label></h2>

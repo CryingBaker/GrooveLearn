@@ -36,7 +36,7 @@
                 <div id="menu-btn" class="fas fa-bars"></div>
                 <div id="search-btn" class="fas fa-search"></div>
                 <div id="user-btn" class="fas fa-user"></div>
-                <div id="toggle-btn" class="fas fa-sun"></div>
+              <div id="toggle-btn" class="fas fa-sun"></div>
             </div>
             <div class="profile">
                 {% if user.is_authenticated %}
@@ -74,7 +74,7 @@
         <nav class="navbar">
             <a href="/home"><i class="fas fa-home"></i></a>
             <a href="/courses"><i class="fas fa-graduation-cap"></i></a>
-            <a href="/calender"><i class="fa-solid fa-calendar-days"></i></a>
+          <!--   <a href="/calender"><i class="fa-solid fa-calendar-days"></i></a> -->
             <a href="/leaderboard"><i class="fa-solid fa-ranking-star"></i></a>
         </nav>
 
@@ -102,6 +102,8 @@
         </div>
         {% endfor %}
     </section>
+    <div class="blank">
+    </div>
     <footer class="footer">
 
         &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!

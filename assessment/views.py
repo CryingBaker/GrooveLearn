@@ -1,12 +1,15 @@
 import json
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from .models import Assignment, AssignmentSubmission, Quiz, MCQQuestion, MCQChoice, QuizSubmission
+from authentication.models import Student, Teacher
 from courses.models import Course
 from django.shortcuts import redirect
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import get_object_or_404
 from django import template
+from django.contrib.auth.models import User
 
 register = template.Library()
 
@@ -22,9 +25,24 @@ def get_user_role(user):
     else:
         return 'Unknown'
     
-
 def leaderboard(request):
-    return render(request, 'assessment/leaderboard.html')
+    students = User.objects.filter(student__isnull=False)
+
+    leaderboard_data = []
+
+    for student in students:
+        quiz_score = QuizSubmission.objects.filter(user=student).aggregate(Sum('score'))['score__sum'] or 0
+        assignment_score = AssignmentSubmission.objects.filter(user=student).aggregate(Sum('score'))['score__sum'] or 0
+
+        total_score = quiz_score + assignment_score
+
+        leaderboard_data.append({
+            'username': student.username,
+            'total_score': total_score
+        })
+    leaderboard_data.sort(key=lambda x: x['total_score'], reverse=True)
+
+    return render(request, 'assessment/leaderboard.html', {'leaderboard_data': leaderboard_data})
 
 def createassignment(request):
     if request.method == 'POST':

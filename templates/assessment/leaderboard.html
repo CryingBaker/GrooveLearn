@@ -36,7 +36,7 @@
                 <div id="menu-btn" class="fas fa-bars"></div>
                 <div id="search-btn" class="fas fa-search"></div>
                 <div id="user-btn" class="fas fa-user"></div>
-             <div id="toggle-btn" class="fas fa-sun"></div> 
+                <div id="toggle-btn" class="fas fa-sun"></div>
             </div>
             <div class="profile">
                 {% if user.is_authenticated %}
@@ -74,7 +74,7 @@
         <nav class="navbar">
             <a href="/home"><i class="fas fa-home"></i></a>
             <a href="/courses"><i class="fas fa-graduation-cap"></i></a>
-            <!-- <a href="/calender"><i class="fa-solid fa-calendar-days"></i></a> -->
+            <a href="/calender"><i class="fa-solid fa-calendar-days"></i></a>
             <a href="/leaderboard"><i class="fa-solid fa-ranking-star"></i></a>
         </nav>
 
@@ -105,138 +105,37 @@
                             alt="star-emoji" /></h1>
                 </div>
             </div>
+            {% for entry in leaderboard_data %}
             <div class="legend">
                 <div class="sr">
-                    <h1>1</h1>
+                    <h1>{{ forloop.counter }}</h1>
                 </div>
                 <div class="s-name">
-                    <h1>Saurabh Kumar</h1>
+                    <h1>{{ entry.username }}</h1>
                 </div>
                 <div class="batch">
-                    <h1>S2</h1>
+                    <h1>S3</h1>
                 </div>
                 <div class="roll">
-                    <h1>24</h1>
+                    <h1>{{ entry.student.roll_no }}</h1>
                 </div>
                 <div class="badge">
+                    {% if forloop.counter == 1 %}
                     <img width="30" height="30" src="https://img.icons8.com/emoji/48/1st-place-medal-emoji.png"
                         alt="1st-place-medal-emoji" />
-                    <img width="30" height="30" src="https://img.icons8.com/emoji/48/1st-place-medal-emoji.png"
-                        alt="1st-place-medal-emoji" />
-                    <img width="30" height="30" src="https://img.icons8.com/emoji/48/1st-place-medal-emoji.png"
-                        alt="1st-place-medal-emoji" />
-                </div>
-                <div class="pts">
-                    <h1>5000</h1>
-                </div>
-            </div>
-            <div class="legend">
-                <div class="sr">
-                    <h1>2</h1>
-                </div>
-                <div class="s-name">
-                    <h1>Jai Parker</h1>
-                </div>
-                <div class="batch">
-                    <h1>S2</h1>
-                </div>
-                <div class="roll">
-                    <h1>41</h1>
-                </div>
-                <div class="badge">
+                    {% elif forloop.counter == 2 %}
                     <img width="30" height="30" src="https://img.icons8.com/emoji/48/2nd-place-medal-emoji.png"
-                        alt="1st-place-medal-emoji" />
+                        alt="2nd-place-medal-emoji" />
+                    {% elif forloop.counter == 3 %}
                     <img width="30" height="30" src="https://img.icons8.com/emoji/48/3rd-place-medal-emoji.png"
-                        alt="1st-place-medal-emoji" />
-                    <img width="30" height="30" src="https://img.icons8.com/emoji/48/2nd-place-medal-emoji.png"
-                        alt="1st-place-medal-emoji" />
+                        alt="3rd-place-medal-emoji" />
+                    {% endif %}
                 </div>
                 <div class="pts">
-                    <h1>4500</h1>
+                    <h1>{{ entry.total_score }}</h1>
                 </div>
             </div>
-            <div class="legend">
-                <div class="sr">
-                    <h1>3</h1>
-                </div>
-                <div class="s-name">
-                    <h1>Atharv Wadadekar</h1>
-                </div>
-                <div class="batch">
-                    <h1>S3</h1>
-                </div>
-                <div class="roll">
-                    <h1>69</h1>
-                </div>
-                <div class="badge">
-                    <img width="30" height="30" src="https://img.icons8.com/emoji/48/3rd-place-medal-emoji.png"
-                        alt="1st-place-medal-emoji" />
-                    <img width="30" height="30" src="https://img.icons8.com/emoji/48/2nd-place-medal-emoji.png"
-                        alt="1st-place-medal-emoji" />
-                </div>
-                <div class="pts">
-                    <h1>4100</h1>
-                </div>
-            </div>
-            <div class="legend">
-                <div class="sr">
-                    <h1>4</h1>
-                </div>
-                <div class="s-name">
-                    <h1>Megh Shah</h1>
-                </div>
-                <div class="batch">
-                    <h1>S3</h1>
-                </div>
-                <div class="roll">
-                    <h1>54</h1>
-                </div>
-                <div class="badge">
-                    <img width="30" height="30" src="https://img.icons8.com/emoji/48/3rd-place-medal-emoji.png"
-                        alt="1st-place-medal-emoji" />
-                </div>
-                <div class="pts">
-                    <h1>4000</h1>
-                </div>
-            </div>
-            <div class="legend">
-                <div class="sr">
-                    <h1>5</h1>
-                </div>
-                <div class="s-name">
-                    <h1>Siddhesh Rane</h1>
-                </div>
-                <div class="batch">
-                    <h1>S3</h1>
-                </div>
-                <div class="roll">
-                    <h1>48</h1>
-                </div>
-                <div class="badge">
-                </div>
-                <div class="pts">
-                    <h1>3700</h1>
-                </div>
-            </div>
-            <div class="legend">
-                <div class="sr">
-                    <h1>6</h1>
-                </div>
-                <div class="s-name">
-                    <h1>Suyash Saraf</h1>
-                </div>
-                <div class="batch">
-                    <h1>S3</h1>
-                </div>
-                <div class="roll">
-                    <h1>52</h1>
-                </div>
-                <div class="badge">
-                </div>
-                <div class="pts">
-                    <h1>3600</h1>
-                </div>
-            </div>
+            {% endfor %}
 
         </div>
         </div>
@@ -248,8 +147,7 @@
         </div>
     </section>
     {% endif %}
-    <div class="blank">
-    </div>
+
     <footer class="footer">
 
         &copy; copyright @ 2024 by <span>Group 16</span> | all rights reserved!

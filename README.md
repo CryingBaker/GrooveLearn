@@ -1,1 +1,1 @@
-Frontend [@lms](https://github.com/CryingBaker/lms)
+GrooveLearn is a learning management system
